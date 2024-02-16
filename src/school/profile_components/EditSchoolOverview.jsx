@@ -33,7 +33,7 @@ function EditSchoolOverview() {
             type="file"
             id="profilePhoto"
             onChange={(e) => setProfilePhoto(e.target.files[0])}
-            className="input w-full"
+            className=""
           />
         </div>
 

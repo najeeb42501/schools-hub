@@ -9,6 +9,7 @@ import EditSchoolFacilities from "./profile_components/EditSchoolFacilities";
 import EditSchoolGallery from "./profile_components/EditSchoolGallery";
 import EditSchoolFeeStructure from "./profile_components/EditSchoolFeeStructure";
 import EditSchoolOverview from "./profile_components/EditSchoolOverview";
+import SchoolReviews from "../components/SchoolReviews";
 
 function EditSchoolProfile() {
   const [component, setComponent] = useState("overview");
@@ -31,8 +32,8 @@ function EditSchoolProfile() {
         return <EditSchoolFacilities />;
       case "contact":
         return <EditSchoolContact />;
-      // case "reviews":
-      //   return <SchoolReviews />;
+      case "reviews":
+        return <SchoolReviews />;
       default:
         return <EditSchoolOverview />;
     }
