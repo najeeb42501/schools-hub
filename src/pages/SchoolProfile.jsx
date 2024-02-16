@@ -224,7 +224,7 @@ function SchoolProfile() {
 
   // Function to determine button style
   const buttonStyle = (value) => {
-    return `hover:bg-white p-4 border border-yellow ${
+    return `hover:bg-white p-4 border border-black ${
       component === value ? "bg-white" : ""
     }`;
   };
@@ -259,13 +259,13 @@ function SchoolProfile() {
         </p>
       </div>
       <div className="grid grid-cols-6">
-        <div className="flex flex-col gap-1 col-span-1  bg-gray-400 justify-evenly">
+        <div className="flex flex-col col-span-1 bg-gray-400  h-full">
           <button
             className={buttonStyle("overview")}
             onClick={(e) => setComponent(e.target.value)}
             value="overview"
           >
-            Overview
+            OVERVIEW
           </button>
           <button
             className={buttonStyle("admission")}
@@ -286,7 +286,7 @@ function SchoolProfile() {
             onClick={(e) => setComponent(e.target.value)}
             value="curriculum"
           >
-            Curriculum:
+            CURRICULUM
           </button>
 
           <button
@@ -315,7 +315,7 @@ function SchoolProfile() {
             onClick={(e) => setComponent(e.target.value)}
             value="about"
           >
-            About
+            ABOUT
           </button>
           <button
             className={buttonStyle("contact")}

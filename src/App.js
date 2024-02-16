@@ -9,12 +9,14 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import BlogPage from "./pages/BlogPage";
 import SchoolProfile from "./pages/SchoolProfile";
+import EditSchoolProfile from "./school/EditSchoolProfile";
 
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
+        <Route path="/editschoolprofile" element={<EditSchoolProfile />} />
         <Route path="/schoolprofile" element={<SchoolProfile />} />
         <Route path="/schools" element={<SchoolsPage />} />
         <Route path="/signup" element={<Signup />} />

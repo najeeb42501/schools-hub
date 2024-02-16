@@ -65,8 +65,8 @@ function SchoolsList() {
             <p>Secondary School</p>
             <p>Adress: Township, Sukkur</p>
             <div className="card-actions justify-center">
-              <button
-                href="#_"
+              <Link
+                to="/editschoolprofile"
                 className="relative inline-flex items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out border-2 border-gray-500 rounded-full shadow-md group"
               >
                 <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-yellow group-hover:translate-x-0 ease">
@@ -89,7 +89,7 @@ function SchoolsList() {
                   See Profile
                 </span>
                 <span className="relative invisible">See Profile</span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
