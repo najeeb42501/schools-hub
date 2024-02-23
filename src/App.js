@@ -10,6 +10,7 @@ import AboutPage from "./pages/AboutPage";
 import BlogPage from "./pages/BlogPage";
 import SchoolProfile from "./pages/SchoolProfile";
 import EditSchoolProfile from "./school/EditSchoolProfile";
+import AdminDashboard from "./admin/AdminDashboard";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/editschoolprofile" element={<EditSchoolProfile />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/schoolprofile" element={<SchoolProfile />} />
         <Route path="/schools" element={<SchoolsPage />} />
         <Route path="/signup" element={<Signup />} />
