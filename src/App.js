@@ -17,8 +17,8 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/editschoolprofile" element={<EditSchoolProfile />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/editschoolprofile" element={<EditSchoolProfile />} />
         <Route path="/schoolprofile" element={<SchoolProfile />} />
         <Route path="/schools" element={<SchoolsPage />} />
         <Route path="/signup" element={<Signup />} />
