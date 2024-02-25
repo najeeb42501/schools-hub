@@ -11,6 +11,7 @@ import BlogPage from "./pages/BlogPage";
 import SchoolProfile from "./pages/SchoolProfile";
 import EditSchoolProfile from "./school/EditSchoolProfile";
 import AdminDashboard from "./admin/AdminDashboard";
+import AIComponent from "./ai/AIComponent";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/ai" element={<AIComponent />} />
         <Route path="/editschoolprofile" element={<EditSchoolProfile />} />
         <Route path="/schoolprofile" element={<SchoolProfile />} />
         <Route path="/schools" element={<SchoolsPage />} />
