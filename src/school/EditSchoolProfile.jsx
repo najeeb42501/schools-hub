@@ -9,7 +9,7 @@ import EditSchoolFacilities from "./profile_components/EditSchoolFacilities";
 import EditSchoolGallery from "./profile_components/EditSchoolGallery";
 import EditSchoolFeeStructure from "./profile_components/EditSchoolFeeStructure";
 import EditSchoolOverview from "./profile_components/EditSchoolOverview";
-import SchoolReviews from "../components/SchoolReviews";
+import SchoolReviews from "../components/schoolprofile_preview_components/SchoolReviews";
 
 function EditSchoolProfile() {
   const [component, setComponent] = useState("overview");

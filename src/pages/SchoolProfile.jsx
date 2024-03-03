@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import SchoolAbout from "../components/SchoolAbout";
-import SchoolFaculty from "../components/SchoolFaculty";
-import SchoolGallery from "../components/SchoolGallery";
-import SchoolContact from "../components/SchoolContact";
-import SchoolCurriculum from "../components/SchoolCurriculum";
-import SchoolFeeStructure from "../components/SchoolFeeStructure";
-import SchoolAdmission from "../components/SchoolAdmission";
-import SchoolFacilities from "../components/SchoolFacilities";
-import SchoolOverview from "../components/SchoolOverview";
-import SchoolReviews from "../components/SchoolReviews";
+import SchoolAbout from "../components/schoolprofile_preview_components/SchoolAbout";
+import SchoolFaculty from "../components/schoolprofile_preview_components/SchoolFaculty";
+import SchoolGallery from "../components/schoolprofile_preview_components/SchoolGallery";
+import SchoolContact from "../components/schoolprofile_preview_components/SchoolContact";
+import SchoolCurriculum from "../components/schoolprofile_preview_components/SchoolCurriculum";
+import SchoolFeeStructure from "../components/schoolprofile_preview_components/SchoolFeeStructure";
+import SchoolAdmission from "../components/schoolprofile_preview_components/SchoolAdmission";
+import SchoolFacilities from "../components/schoolprofile_preview_components/SchoolFacilities";
+import SchoolOverview from "../components/schoolprofile_preview_components/SchoolOverview";
+import SchoolReviews from "../components/schoolprofile_preview_components/SchoolReviews";
 
 function SchoolProfile() {
   const [component, setComponent] = useState("overview");
