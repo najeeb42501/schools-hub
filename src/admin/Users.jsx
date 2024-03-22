@@ -50,13 +50,17 @@ function Users() {
   return (
     <div className="p-4">
       {/* Search input */}
-      <input
-        type="text"
-        placeholder="Search by email"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="border border-gray-300 p-2 rounded mb-4"
-      />
+      <div className="w-full">
+        <input
+          type="text"
+          placeholder="Search by email"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border w-full border-gray-300 p-2 rounded mb-4 "
+        />
+      </div>
+
+      <hr className="my-4 border-gray-300" />
 
       {/* Table of users */}
       <div className="overflow-x-auto">
