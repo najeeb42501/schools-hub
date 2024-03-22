@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 function Schools() {
-  const [schools, setSchools] = React.useState([]);
+  const [schools, setSchools] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchSchools = async () => {
@@ -87,6 +88,11 @@ function Schools() {
     }
   };
 
+  // Function to handle search
+  const filteredSchools = schools.filter((school) =>
+    school.school_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="p-4">
       <Formik
@@ -104,13 +110,13 @@ function Schools() {
                 type="text"
                 id="school_name"
                 name="school_name"
-                className="form-input mt-1 rounded-md w-full"
+                className=" mt-1 p-3 my-2 bg-gray-100 rounded w-full"
                 placeholder="Enter school name"
               />
               <ErrorMessage
-                name="name"
-                component="div"
-                className="text-red-500"
+                name="school_name"
+                component="span"
+                className="text-red"
               />
             </div>
             <div>
@@ -121,13 +127,13 @@ function Schools() {
                 type="text"
                 id="email"
                 name="email"
-                className="form-input mt-1 rounded-md w-full"
+                className="form-input mt-1 p-3 my-2 bg-gray-100 rounded w-full"
                 placeholder="Enter email"
               />
               <ErrorMessage
                 name="email"
-                component="div"
-                className="text-red-500"
+                component="span"
+                className="text-red"
               />
             </div>
             <div>
@@ -138,13 +144,13 @@ function Schools() {
                 type="password"
                 id="password"
                 name="password"
-                className="form-input mt-1 rounded-md w-full"
+                className="form-input mt-1 p-3 my-2 bg-gray-100 rounded w-full"
                 placeholder="Enter password"
               />
               <ErrorMessage
                 name="password"
-                component="div"
-                className="text-red-500"
+                component="span"
+                className="text-red"
               />
             </div>
             <div>
@@ -155,25 +161,37 @@ function Schools() {
                 type="text"
                 id="city"
                 name="city"
-                className="form-input mt-1 rounded-md w-full"
+                className="form-input mt-1 p-3 my-2 bg-gray-100 rounded w-full"
                 placeholder="Enter city"
               />
-              <ErrorMessage
-                name="city"
-                component="div"
-                className="text-red-500"
-              />
+              <ErrorMessage name="city" component="span" className="text-red" />
             </div>
           </div>
-          <button type="submit" className="btn btn-primary mt-4">
-            Create School Profile
+          <button
+            type="submit"
+            className="rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-indigo-600 text-indigo-600 text-white mt-4 "
+          >
+            <span class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-indigo-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
+            <span class="relative text-indigo-600 transition duration-300 group-hover:text-white ease">
+              Create School Profile
+            </span>
           </button>
         </Form>
       </Formik>
 
+      <div>
+        <input
+          type="text"
+          placeholder="Search by School Name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border border-gray-300 p-2 rounded mb-4"
+        />
+      </div>
+
       {/* Table of schools */}
       <div className="overflow-y-auto max-h-96">
-        <table className="table-auto w-full">
+        <table className="table table-zebra">
           <thead>
             <tr>
               <th className="px-4 py-2">School Name</th>
@@ -184,7 +202,7 @@ function Schools() {
             </tr>
           </thead>
           <tbody>
-            {schools.map((school) => (
+            {filteredSchools.map((school) => (
               <tr key={school._id}>
                 <td className="border px-4 py-2">{school.school_name}</td>
                 <td className="border px-4 py-2">{school.email}</td>
@@ -193,7 +211,7 @@ function Schools() {
                 <td className="border px-4 py-2">
                   <button
                     onClick={() => handleDelete(school._id)}
-                    className="btn btn-secondary"
+                    className="btn btn-warning"
                   >
                     Delete
                   </button>
