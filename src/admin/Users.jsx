@@ -1,19 +1,45 @@
 // Users.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Users() {
   // Sample data for users (replace with actual data)
-  const [users, setUsers] = useState([
-    { id: 1, email: "user1@example.com", password: "password1" },
-    { id: 2, email: "user2@example.com", password: "password2" },
-    { id: 3, email: "user3@example.com", password: "password3" },
-    // Add more sample data as needed
-  ]);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchSchools = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/admin/users");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("School : " + data);
+        setUsers(data);
+      } catch (error) {
+        console.error("Error fetching schools:", error);
+      }
+    };
+    fetchSchools();
+  }, []);
 
   // Function to handle deletion of a user
-  const handleDelete = (id) => {
-    const updatedUsers = users.filter((user) => user.id !== id);
-    setUsers(updatedUsers);
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/admin/deleteUser/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      alert("School deleted successfully");
+      const updatedSchools = users.filter((school) => school._id !== id);
+      setUsers(updatedSchools);
+    } catch (error) {
+      console.error("Error deleting school:", error);
+    }
   };
 
   return (
@@ -30,12 +56,12 @@ function Users() {
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr key={user.id}>
+              <tr key={user._id}>
                 <td className="border px-4 py-2">{user.email}</td>
                 <td className="border px-4 py-2">{user.password}</td>
                 <td className="border px-4 py-2">
                   <button
-                    onClick={() => handleDelete(user.id)}
+                    onClick={() => handleDelete(user._id)}
                     className="btn btn-secondary"
                   >
                     Delete

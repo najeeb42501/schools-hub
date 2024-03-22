@@ -68,9 +68,23 @@ function Schools() {
     }
   };
 
-  const handleDelete = (id) => {
-    const updatedSchools = schools.filter((school) => school.id !== id);
-    setSchools(updatedSchools);
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/admin/deleteSchool/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      alert("School deleted successfully");
+      const updatedSchools = schools.filter((school) => school._id !== id);
+      setSchools(updatedSchools);
+    } catch (error) {
+      console.error("Error deleting school:", error);
+    }
   };
 
   return (
@@ -171,14 +185,14 @@ function Schools() {
           </thead>
           <tbody>
             {schools.map((school) => (
-              <tr key={school.id}>
+              <tr key={school._id}>
                 <td className="border px-4 py-2">{school.school_name}</td>
                 <td className="border px-4 py-2">{school.email}</td>
                 <td className="border px-4 py-2">{school.password}</td>
                 <td className="border px-4 py-2">{school.city}</td>
                 <td className="border px-4 py-2">
                   <button
-                    onClick={() => handleDelete(school.id)}
+                    onClick={() => handleDelete(school._id)}
                     className="btn btn-secondary"
                   >
                     Delete
