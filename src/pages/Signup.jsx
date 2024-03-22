@@ -6,17 +6,20 @@ import LoginPageSideComponent from "../components/LoginPageSideComponent";
 
 function Signup() {
   const initialValues = {
-    fullName: "",
+    username: "",
     email: "",
+    city: "",
     password: "",
     confirmPassword: "",
+    type: "user",
   };
 
   const validationSchema = Yup.object({
-    fullName: Yup.string().required("Full Name is required"),
+    username: Yup.string().required("Full Name is required"),
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
+    city: Yup.string().required("Please enter your city name"),
     password: Yup.string().required("Password is required"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
@@ -25,13 +28,16 @@ function Signup() {
 
   const handleSubmit = async (values) => {
     try {
-      const response = await fetch("http://localhost:5000/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        "http://localhost:5000/auth/createUserProfile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
       const data = await response.json();
       alert(data.message); // Show success message
     } catch (error) {
@@ -59,10 +65,21 @@ function Signup() {
                 className=" p-3 my-2 bg-gray-100 rounded "
                 type="text"
                 placeholder="Full Name"
-                name="fullName"
+                name="username"
               />
               <ErrorMessage
-                name="fullName"
+                name="username"
+                component="div"
+                className="text-red-500"
+              />
+              <Field
+                className=" p-3 my-2 bg-gray-100 rounded "
+                type="text"
+                placeholder="City"
+                name="city"
+              />
+              <ErrorMessage
+                name="city"
                 component="div"
                 className="text-red-500"
               />

@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function Overview() {
+function Overview({ registeredUsers }) {
   // Sample data for the chart (replace with actual data)
   const data = [
     { month: "Jan", users: 400, schools: 240 },
@@ -33,12 +33,12 @@ function Overview() {
       {/* First row with two cards */}
       <div className="card p-4 bg-white shadow-lg rounded-lg">
         <h2 className="text-xl font-semibold mb-2">Total Users</h2>
-        <p className="text-3xl font-bold">5000</p>
+        <p className="text-3xl font-bold">{registeredUsers.totalUsers}</p>
       </div>
 
       <div className="card p-4 bg-white shadow-lg rounded-lg">
         <h2 className="text-xl font-semibold mb-2">Total Schools</h2>
-        <p className="text-3xl font-bold">100</p>
+        <p className="text-3xl font-bold">{registeredUsers.totalSchools}</p>
       </div>
 
       {/* Second row with the chart */}

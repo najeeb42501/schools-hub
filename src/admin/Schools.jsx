@@ -1,59 +1,73 @@
-// Schools.js
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 function Schools() {
-  // Sample data for schools (replace with actual data)
-  const [schools, setSchools] = useState([
-    {
-      id: 1,
-      schoolName: "School A",
-      username: "userA",
-      password: "passA",
-      city: "City A",
-    },
-    {
-      id: 2,
-      schoolName: "School B",
-      username: "userB",
-      password: "passB",
-      city: "City B",
-    },
-    {
-      id: 3,
-      schoolName: "School C",
-      username: "userC",
-      password: "passC",
-      city: "City C",
-    },
-    // Add more sample data as needed
-  ]);
+  const [schools, setSchools] = React.useState([]);
 
-  // State for form inputs
-  const [schoolName, setSchoolName] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [city, setCity] = useState("");
-
-  // Function to handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add new school to the schools array
-    const newSchool = {
-      id: Date.now(), // Generate unique ID (replace with actual method)
-      schoolName: schoolName,
-      username: username,
-      password: password,
-      city: city,
+  useEffect(() => {
+    const fetchSchools = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/admin/schools");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("School : " + data);
+        setSchools(data);
+      } catch (error) {
+        console.error("Error fetching schools:", error);
+      }
     };
-    setSchools([...schools, newSchool]);
-    // Clear form inputs
-    setSchoolName("");
-    setUsername("");
-    setPassword("");
-    setCity("");
+    fetchSchools();
+  }, []);
+
+  const initialValues = {
+    school_name: "",
+    email: "",
+    password: "",
+    city: "",
+    type: "school",
   };
 
-  // Function to handle deletion of a school
+  const validationSchema = Yup.object({
+    school_name: Yup.string().required("School Name is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    password: Yup.string().required("Password is required"),
+    city: Yup.string().required("City is required"),
+  });
+
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/admin/createSchoolProfile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
+
+      const data = await response.json();
+      alert(data.message);
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message);
+      }
+
+      const newSchool = await response.json();
+      setSchools([...schools, newSchool]);
+      resetForm();
+    } catch (error) {
+      console.error("Error creating school profile:", error.message);
+    }
+  };
+
   const handleDelete = (id) => {
     const updatedSchools = schools.filter((school) => school.id !== id);
     setSchools(updatedSchools);
@@ -61,70 +75,87 @@ function Schools() {
 
   return (
     <div className="p-4">
-      {/* Form for creating a school profile */}
-      <form onSubmit={handleSubmit} className="mb-8">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="schoolName" className="block font-medium">
-              School Name:
-            </label>
-            <input
-              type="text"
-              id="schoolName"
-              value={schoolName}
-              onChange={(e) => setSchoolName(e.target.value)}
-              className="form-input mt-1 rounded-md w-full"
-              placeholder="Enter school name"
-              required
-            />
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        <Form className="mb-8">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="name" className="block font-medium">
+                School Name:
+              </label>
+              <Field
+                type="text"
+                id="school_name"
+                name="school_name"
+                className="form-input mt-1 rounded-md w-full"
+                placeholder="Enter school name"
+              />
+              <ErrorMessage
+                name="name"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block font-medium">
+                Email:
+              </label>
+              <Field
+                type="text"
+                id="email"
+                name="email"
+                className="form-input mt-1 rounded-md w-full"
+                placeholder="Enter email"
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="block font-medium">
+                Password:
+              </label>
+              <Field
+                type="password"
+                id="password"
+                name="password"
+                className="form-input mt-1 rounded-md w-full"
+                placeholder="Enter password"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
+            <div>
+              <label htmlFor="city" className="block font-medium">
+                City:
+              </label>
+              <Field
+                type="text"
+                id="city"
+                name="city"
+                className="form-input mt-1 rounded-md w-full"
+                placeholder="Enter city"
+              />
+              <ErrorMessage
+                name="city"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
           </div>
-          <div>
-            <label htmlFor="username" className="block font-medium">
-              Username:
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="form-input mt-1 rounded-md w-full"
-              placeholder="Enter username"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block font-medium">
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="form-input mt-1 rounded-md w-full"
-              placeholder="Enter password"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="city" className="block font-medium">
-              City:
-            </label>
-            <input
-              type="text"
-              id="city"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              className="form-input mt-1 rounded-md w-full"
-              placeholder="Enter city"
-              required
-            />
-          </div>
-        </div>
-        <button type="submit" className="btn btn-primary mt-4">
-          Create School Profile
-        </button>
-      </form>
+          <button type="submit" className="btn btn-primary mt-4">
+            Create School Profile
+          </button>
+        </Form>
+      </Formik>
 
       {/* Table of schools */}
       <div className="overflow-y-auto max-h-96">
@@ -132,7 +163,7 @@ function Schools() {
           <thead>
             <tr>
               <th className="px-4 py-2">School Name</th>
-              <th className="px-4 py-2">Username</th>
+              <th className="px-4 py-2">Email</th>
               <th className="px-4 py-2">Password</th>
               <th className="px-4 py-2">City</th>
               <th className="px-4 py-2">Action</th>
@@ -141,8 +172,8 @@ function Schools() {
           <tbody>
             {schools.map((school) => (
               <tr key={school.id}>
-                <td className="border px-4 py-2">{school.schoolName}</td>
-                <td className="border px-4 py-2">{school.username}</td>
+                <td className="border px-4 py-2">{school.school_name}</td>
+                <td className="border px-4 py-2">{school.email}</td>
                 <td className="border px-4 py-2">{school.password}</td>
                 <td className="border px-4 py-2">{school.city}</td>
                 <td className="border px-4 py-2">
