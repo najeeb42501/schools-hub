@@ -10,8 +10,11 @@ import EditSchoolGallery from "./profile_components/EditSchoolGallery";
 import EditSchoolFeeStructure from "./profile_components/EditSchoolFeeStructure";
 import EditSchoolOverview from "./profile_components/EditSchoolOverview";
 import SchoolReviews from "../components/schoolprofile_preview_components/SchoolReviews";
+import { useAppContext } from "../state/ContextAPI";
 
 function EditSchoolProfile() {
+  const { state } = useAppContext();
+  const school_id = state._id;
   const [component, setComponent] = useState("overview");
 
   const renderComponent = () => {
@@ -19,23 +22,23 @@ function EditSchoolProfile() {
       case "about":
         return <EditAboutSchool />;
       case "admission":
-        return <EditSchoolAdmission />;
+        return <EditSchoolAdmission id={school_id} />;
       case "faculty":
-        return <EditSchoolFaculty />;
+        return <EditSchoolFaculty id={school_id} />;
       case "curriculum":
-        return <EditSchoolCurriculum />;
+        return <EditSchoolCurriculum id={school_id} />;
       case "fee":
-        return <EditSchoolFeeStructure />;
+        return <EditSchoolFeeStructure id={school_id} />;
       case "gallery":
-        return <EditSchoolGallery />;
+        return <EditSchoolGallery id={school_id} />;
       case "facilities":
-        return <EditSchoolFacilities />;
+        return <EditSchoolFacilities id={school_id} />;
       case "contact":
-        return <EditSchoolContact />;
+        return <EditSchoolContact id={school_id} />;
       case "reviews":
         return <SchoolReviews />;
       default:
-        return <EditSchoolOverview />;
+        return <EditSchoolOverview id={school_id} />;
     }
   };
 
