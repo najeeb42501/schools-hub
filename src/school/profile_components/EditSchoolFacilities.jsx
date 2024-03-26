@@ -1,8 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function EditSchoolFacilities() {
+function EditSchoolFacilities({ id }) {
   const [activity, setActivity] = useState({ name: "", description: "" });
   const [activitiesList, setActivitiesList] = useState([]);
+
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/getSchoolData/school-activities/${id}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch activities");
+        }
+        const data = await response.json();
+        console.log("Res DAT Acts : ", data);
+        setActivitiesList(data.activities);
+      } catch (error) {
+        console.error("Error fetching activities:", error);
+      }
+    };
+    fetchActivities();
+  }, [id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -18,10 +37,29 @@ function EditSchoolFacilities() {
     setActivity({ name: "", description: "" });
   };
 
-  const handleSave = () => {
-    // Here you would typically make an API call to the server to save the activitiesList
-    console.log("Activities to save:", activitiesList);
-    alert("Activities saved! (simulated)");
+  const handleSave = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/editSchoolProfile/saveActivities/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ activities: activitiesList }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to save activities");
+      }
+
+      alert("Activities saved successfully!");
+      setActivitiesList([]);
+    } catch (error) {
+      console.error("Error saving activities:", error);
+      alert("Failed to save activities. Please try again.");
+    }
   };
 
   return (
