@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
+import axios from "axios";
 
 const validationSchema = Yup.object({
   schoolProfilePhoto: Yup.mixed().required("Profile Photo is required"),
@@ -55,21 +56,25 @@ function EditSchoolOverview({ id }) {
   const handleSubmit = async (values, { setSubmitting }) => {
     console.log("Submitting form", values);
     console.log("Handle Submit Call");
+    const formData = new FormData();
+    Object.entries(values).map(([key, value]) => {
+      formData.append(key, value);
+    });
+
     try {
-      const response = await fetch(
+      const response = await axios.put(
         `http://localhost:5000/editSchoolProfile/save-so-data/${id}`,
+        formData,
         {
-          method: "PUT",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
-          body: JSON.stringify(values),
         }
       );
-
-      if (!response.ok) {
-        throw new Error("Failed to update data");
-      }
+      console.log(response);
+      // if (!response.ok) {
+      //   throw new Error("Failed to update data");
+      // }
 
       // Simulate an API call to save or update the data
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulating a delay of 1 second
@@ -106,8 +111,8 @@ function EditSchoolOverview({ id }) {
             _id: schoolData._id || "",
             schoolId: id,
             schoolName: schoolData.schoolName || "",
-            schoolProfilePhoto: "",
-            coverPhoto: "",
+            schoolProfilePhoto: null,
+            coverPhoto: null,
             schoolLevel: schoolData.schoolLevel || "",
             schoolSystem: schoolData.schoolSystem || "",
             schoolMedium: schoolData.schoolMedium || "",
@@ -144,13 +149,23 @@ function EditSchoolOverview({ id }) {
                   Profile Photo:
                 </label>
 
-                <Field
+                <input
                   type="file"
                   id="schoolProfilePhoto"
                   name="schoolProfilePhoto"
                   className=""
+                  onChange={(e) =>
+                    formik.setFieldValue(
+                      "schoolProfilePhoto",
+                      e.currentTarget.files[0]
+                    )
+                  }
                 />
-
+                <img
+                  src={`http://localhost:5000/images/${schoolData.schoolProfilePhoto}`}
+                  alt=""
+                  srcset=""
+                />
                 <ErrorMessage
                   name="schoolProfilePhoto"
                   component="div"
@@ -163,13 +178,15 @@ function EditSchoolOverview({ id }) {
                   Cover Photo:
                 </label>
 
-                <Field
+                <input
                   type="file"
                   id="coverPhoto"
                   name="coverPhoto"
                   className="input w-full"
+                  onChange={(e) =>
+                    formik.setFieldValue("coverPhoto", e.currentTarget.files[0])
+                  }
                 />
-
                 <ErrorMessage
                   name="coverPhoto"
                   component="div"

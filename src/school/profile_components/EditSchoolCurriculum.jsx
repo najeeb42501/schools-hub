@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function EditSchoolCurriculum() {
+function EditSchoolCurriculum({ id }) {
   const [courses, setCourses] = useState([
     { id: 1, name: "Sindh Text Board", selected: false },
     { id: 2, name: "Oxford O Level", selected: false },
@@ -9,6 +9,42 @@ function EditSchoolCurriculum() {
     // Add more courses as needed
   ]);
 
+  const [otherDetails, setOtherDetails] = useState("");
+  const [isDataFetched, setIsDataFetched] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/getSchoolData/school-curriculum/${id}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const data = await response.json();
+
+        // Extract course names from the response data
+        const selectedCourseNames = data.courses;
+
+        // Update the state to mark selected courses as true
+        const updatedCourses = courses.map((course) => ({
+          ...course,
+          selected: selectedCourseNames.includes(course.name),
+        }));
+
+        setCourses(updatedCourses);
+        setOtherDetails(data.otherDetails || "");
+        setIsDataFetched(true);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
   const handleCheckboxChange = (id) => {
     const updatedCourses = courses.map((course) =>
       course.id === id ? { ...course, selected: !course.selected } : course
@@ -16,12 +52,34 @@ function EditSchoolCurriculum() {
     setCourses(updatedCourses);
   };
 
-  const handleSave = () => {
-    // Implement save logic here
-    console.log(
-      "Saving selected courses:",
-      courses.filter((course) => course.selected)
-    );
+  const handleSubmit = async () => {
+    try {
+      const selectedCourses = courses
+        .filter((course) => course.selected)
+        .map((course) => course.name);
+
+      const formData = {
+        courses: selectedCourses,
+        otherDetails: otherDetails,
+      };
+
+      const response = await fetch(
+        `http://localhost:5000/editSchoolProfile/save-school-curriculum-data/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to save data");
+      }
+      console.log("Data saved successfully");
+    } catch (error) {
+      console.error("Error saving data:", error);
+    }
   };
 
   return (
@@ -29,30 +87,49 @@ function EditSchoolCurriculum() {
       <h2 className="text-center text-2xl font-bold mb-4 text-gray-800">
         Edit School Curriculum
       </h2>
-      <div>
-        {courses.map((course) => (
-          <div key={course.id} className="flex items-center mb-4">
-            <input
-              type="checkbox"
-              id={`course-${course.id}`}
-              checked={course.selected}
-              onChange={() => handleCheckboxChange(course.id)}
-              className="mr-2"
-            />
-            <label htmlFor={`course-${course.id}`} className="text-lg">
-              {course.name}
-            </label>
+      {isDataFetched && (
+        <>
+          <div>
+            {courses.map((course) => (
+              <div key={course.id} className="flex items-center mb-4">
+                <input
+                  type="checkbox"
+                  id={`course-${course.id}`}
+                  checked={course.selected}
+                  onChange={() => handleCheckboxChange(course.id)}
+                  className="mr-2"
+                />
+                <label htmlFor={`course-${course.id}`} className="text-lg">
+                  {course.name}
+                </label>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="text-center mt-4">
-        <button
-          onClick={handleSave}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Save
-        </button>
-      </div>
+          <div className="mb-4">
+            <label
+              htmlFor="otherDetails"
+              className="block text-lg font-semibold mb-2"
+            >
+              Other Details:
+            </label>
+            <textarea
+              id="otherDetails"
+              value={otherDetails}
+              onChange={(e) => setOtherDetails(e.target.value)}
+              className="w-full h-32 border border-gray-300 rounded-md p-2"
+              placeholder="Add other necessary details about the curriculum..."
+            ></textarea>
+          </div>
+          <div className="text-center mt-4">
+            <button
+              onClick={handleSubmit}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Save
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
