@@ -29,8 +29,24 @@ const validationSchema = Yup.object({
 function EditSchoolOverview({ id }) {
   // console.log("school id : " + id);
 
-  const [schoolData, setSchoolData] = useState({ schoolID: id });
+  //const [schoolData, setSchoolData] = useState({ schoolID: id });
   const [isDataFetched, setIsDataFetched] = useState(false);
+  const [initialData, setInitialData] = useState({
+    _id: "",
+    schoolId: id,
+    schoolName: "",
+    schoolProfilePhoto: null,
+    coverPhoto: null,
+    schoolLevel: "",
+    schoolSystem: "",
+    schoolMedium: "",
+    schoolingType: "",
+    accreditations: "",
+    enrolledStudents: "",
+    numberOfTeachers: "",
+    averageClassSize: "",
+    studentTeacherRatio: "",
+  });
 
   useEffect(() => {
     const fetchSchoolData = async () => {
@@ -43,8 +59,24 @@ function EditSchoolOverview({ id }) {
         }
         const data = await response.json();
         console.log("Response DATA SO : ", data); // Log the data to verify it's a JavaScript object
-        setSchoolData(data);
+
         setIsDataFetched(true);
+        setInitialData({
+          _id: data._id || "",
+          schoolId: id,
+          schoolName: data.schoolName || "",
+          schoolProfilePhoto: null,
+          coverPhoto: null,
+          schoolLevel: data.schoolLevel || "",
+          schoolSystem: data.schoolSystem || "",
+          schoolMedium: data.schoolMedium || "",
+          schoolingType: data.schoolingType || "",
+          accreditations: data.accreditations || "",
+          enrolledStudents: data.enrolledStudents || "",
+          numberOfTeachers: data.numberOfTeachers || "",
+          averageClassSize: data.averageClassSize || "",
+          studentTeacherRatio: data.studentTeacherRatio || "",
+        });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -88,41 +120,13 @@ function EditSchoolOverview({ id }) {
     }
   };
 
-  // const convertToBase64Image = (e) => {
-  //   // return new Promise((resolve, reject) => {
-  //   console.log("B64 : " + e);
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(e.target.files[0]);
-  //   reader.onload = () => {
-  //     console.log(reader.result);
-  //     setProfileImage(reader.result);
-  //   };
-  //   reader.onerror = (error) => {
-  //     console.log("B64 error : ", error);
-  //   };
-  // };
-
   return (
     <div className="p-4">
       <h1 className="text-3xl font-bold mb-4">School Basic Details</h1>
-      {isDataFetched && (
+      {
         <Formik
-          initialValues={{
-            _id: schoolData._id || "",
-            schoolId: id,
-            schoolName: schoolData.schoolName || "",
-            schoolProfilePhoto: null,
-            coverPhoto: null,
-            schoolLevel: schoolData.schoolLevel || "",
-            schoolSystem: schoolData.schoolSystem || "",
-            schoolMedium: schoolData.schoolMedium || "",
-            schoolingType: schoolData.schoolingType || "",
-            accreditations: schoolData.accreditations || "",
-            enrolledStudents: schoolData.enrolledStudents || "",
-            numberOfTeachers: schoolData.numberOfTeachers || "",
-            averageClassSize: schoolData.averageClassSize || "",
-            studentTeacherRatio: schoolData.studentTeacherRatio || "",
-          }}
+          enableReinitialize={true}
+          initialValues={initialData}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
@@ -162,7 +166,7 @@ function EditSchoolOverview({ id }) {
                   }
                 />
                 <img
-                  src={`http://localhost:5000/images/${schoolData.schoolProfilePhoto}`}
+                  src={`http://localhost:5000/images/${initialData.schoolProfilePhoto}`}
                   alt=""
                   srcset=""
                 />
@@ -355,7 +359,7 @@ function EditSchoolOverview({ id }) {
             </Form>
           )}
         </Formik>
-      )}
+      }
     </div>
   );
 }

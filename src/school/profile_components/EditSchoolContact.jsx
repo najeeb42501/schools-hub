@@ -4,8 +4,13 @@ import * as Yup from "yup";
 import { FaPhone, FaEnvelope, FaGlobe, FaMapMarkerAlt } from "react-icons/fa";
 
 function EditSchoolContact({ id }) {
-  const [schoolData, setSchoolData] = useState({ schoolID: id });
-  const [isDataFetched, setIsDataFetched] = useState(false);
+  const [initialData, setInitialData] = useState({
+    schoolID: id,
+    schoolMobileNo: "",
+    schoolEmail: "",
+    schoolWebsite: "",
+    schoolAddress: "",
+  });
 
   useEffect(() => {
     const fetchSchoolContact = async () => {
@@ -18,8 +23,7 @@ function EditSchoolContact({ id }) {
         }
         const data = await response.json();
         console.log("Response Data : " + JSON.stringify(data));
-        setSchoolData(data);
-        setIsDataFetched(true);
+        setInitialData(data);
       } catch (error) {
         console.error("Error fetching contact data:", error);
       }
@@ -72,88 +76,81 @@ function EditSchoolContact({ id }) {
       <h2 className="text-3xl font-semibold text-center my-6">
         Edit School Contact
       </h2>
-      {isDataFetched && (
-        <Formik
-          initialValues={{
-            schoolID: id,
-            schoolMobileNo: schoolData.schoolMobileNo || "",
-            schoolEmail: schoolData.schoolEmail || "",
-            schoolWebsite: schoolData.schoolWebsite || "",
-            schoolAddress: schoolData.schoolAddress || "",
-          }}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          {(formik) => (
-            <Form>
-              <div className="mb-4 flex items-center">
-                <FaPhone className="text-gray-400 mr-2" />
-                <Field
-                  type="tel"
-                  name="schoolMobileNo"
-                  className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
-                  placeholder="Phone Number"
-                />
-                <ErrorMessage
-                  name="schoolMobileNo"
-                  component="div"
-                  className="text-red-500"
-                />
-              </div>
-              <div className="mb-4 flex items-center">
-                <FaEnvelope className="text-gray-400 mr-2" />
-                <Field
-                  type="email"
-                  name="schoolEmail"
-                  className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
-                  placeholder="Email"
-                />
-                <ErrorMessage
-                  name="schoolEmail"
-                  component="div"
-                  className="text-red-500"
-                />
-              </div>
-              <div className="mb-4 flex items-center">
-                <FaGlobe className="text-gray-400 mr-2" />
-                <Field
-                  type="url"
-                  name="schoolWebsite"
-                  className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
-                  placeholder="Website Link"
-                />
-                <ErrorMessage
-                  name="schoolWebsite"
-                  component="div"
-                  className="text-red-500"
-                />
-              </div>
-              <div className="mb-4 flex items-center">
-                <FaMapMarkerAlt className="text-gray-400 mr-2" />
-                <Field
-                  type="text"
-                  name="schoolAddress"
-                  className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
-                  placeholder="Address"
-                />
-                <ErrorMessage
-                  name="schoolAddress"
-                  component="div"
-                  className="text-red-500"
-                />
-              </div>
-              <div className="mt-6">
-                <button
-                  type="submit"
-                  className="bg-gray-600 hover:bg-yellow text-white px-4 py-2 rounded focus:outline-none focus:ring focus:ring-blue-200"
-                >
-                  Save Contact
-                </button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      )}
+      <Formik
+        enableReinitialize={true}
+        initialValues={initialData}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {(formik) => (
+          <Form>
+            <div className="mb-4 flex items-center">
+              <FaPhone className="text-gray-400 mr-2" />
+              <Field
+                type="tel"
+                name="schoolMobileNo"
+                className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+                placeholder="Phone Number"
+              />
+              <ErrorMessage
+                name="schoolMobileNo"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
+            <div className="mb-4 flex items-center">
+              <FaEnvelope className="text-gray-400 mr-2" />
+              <Field
+                type="email"
+                name="schoolEmail"
+                className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+                placeholder="Email"
+              />
+              <ErrorMessage
+                name="schoolEmail"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
+            <div className="mb-4 flex items-center">
+              <FaGlobe className="text-gray-400 mr-2" />
+              <Field
+                type="url"
+                name="schoolWebsite"
+                className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+                placeholder="Website Link"
+              />
+              <ErrorMessage
+                name="schoolWebsite"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
+            <div className="mb-4 flex items-center">
+              <FaMapMarkerAlt className="text-gray-400 mr-2" />
+              <Field
+                type="text"
+                name="schoolAddress"
+                className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:border-blue-500"
+                placeholder="Address"
+              />
+              <ErrorMessage
+                name="schoolAddress"
+                component="div"
+                className="text-red-500"
+              />
+            </div>
+            <div className="mt-6">
+              <button
+                type="submit"
+                className="bg-gray-600 hover:bg-yellow text-white px-4 py-2 rounded focus:outline-none focus:ring focus:ring-blue-200"
+              >
+                Save Contact
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 }

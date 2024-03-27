@@ -55,7 +55,7 @@ function EditSchoolFacilities({ id }) {
       }
 
       alert("Activities saved successfully!");
-      setActivitiesList([]);
+      //setActivitiesList([]);
     } catch (error) {
       console.error("Error saving activities:", error);
       alert("Failed to save activities. Please try again.");
