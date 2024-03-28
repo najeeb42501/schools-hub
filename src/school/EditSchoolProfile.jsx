@@ -20,7 +20,7 @@ function EditSchoolProfile() {
   const renderComponent = () => {
     switch (component) {
       case "about":
-        return <EditAboutSchool />;
+        return <EditAboutSchool id={school_id} />;
       case "admission":
         return <EditSchoolAdmission id={school_id} />;
       case "faculty":
