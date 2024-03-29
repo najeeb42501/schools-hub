@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import SchoolAbout from "../components/schoolprofile_preview_components/SchoolAbout";
 import SchoolFaculty from "../components/schoolprofile_preview_components/SchoolFaculty";
 import SchoolGallery from "../components/schoolprofile_preview_components/SchoolGallery";
@@ -11,6 +12,8 @@ import SchoolOverview from "../components/schoolprofile_preview_components/Schoo
 import SchoolReviews from "../components/schoolprofile_preview_components/SchoolReviews";
 
 function SchoolProfile() {
+  const { schoolID } = useParams();
+  console.log("school id : ", schoolID);
   const [component, setComponent] = useState("overview");
 
   const schoolGenInfo = {

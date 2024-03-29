@@ -104,9 +104,11 @@ function EditSchoolOverview({ id }) {
         }
       );
       console.log(response);
-      // if (!response.ok) {
-      //   throw new Error("Failed to update data");
-      // }
+      if (response) {
+        alert("School profile updated successfully");
+      } else {
+        alert("Failed to update school profile");
+      }
 
       // Simulate an API call to save or update the data
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulating a delay of 1 second
