@@ -1,43 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-function SchoolAbout({ data }) {
+function SchoolAbout({ schoolID }) {
+  console.log("ABout SID: ", schoolID);
+  const [schoolAboutData, setSchoolAboutData] = useState({});
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/getSchoolData/school-about/${schoolID}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch schools data");
+        }
+        const data = await response.json();
+
+        console.log("Schools : ", data);
+        setSchoolAboutData(data); // Store the fetched data in state
+      } catch (error) {
+        console.error("Error fetching schools data:", error);
+      }
+    };
+
+    fetchData(); // Call the function to fetch data
+  }, []);
+
   return (
-    <>
-      <div className="text-center">
-        <h1 className="text-3xl font-bold py-4">ABOUT SCHOOL</h1>
-        <p>
-          The Education has been destroyed by many well known factors in our
-          society. It has changed the mental approach of students and parents
-          that there is no way to success without following the all existing
-          malpractices. Keeping above facts in view, It was thought by well
-          wishers and senior educationist of Sukkur city to develop School
-          system where quality education on affording cost should be provided
-          and students/parents understanding should be changed that success can
-          only be achieved by getting quality education with innovative ways
-          without malpractices.
-        </p>
-      </div>
-      <div class="card card-side bg-base-100 shadow-xl my-5">
-        <figure>
-          <img
-            className=""
-            src="https://www.soe.edu.pk/profile_images/principal.jpg"
-          />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Mr.Jamal Uddin Unar </h2>
-          <h2 class="font-bold  ">Principal</h2>
-          <p>
-            I visualize a terrific and excellent future of School of Excellence
-            which would gratify the needs of thousands of young students whose
-            rich intellectual potentialities would be allowed to explore
-            properly in SOE. The dynamic minds of the region will certainly
-            contribute to make SOE a true seat of learning and sanctuary of
-            peace, serenity and harmony.
-          </p>
+    <div className="px-4 py-10  min-h-screen bg-gray-100">
+      <h1 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-10">
+        About School Details:
+      </h1>
+      <div className="flex flex-col gap-10 justify-center items-center mx-auto">
+        {/* First Card */}
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-yellow p-8">
+            <h2 className="text-3xl font-extrabold text-white mb-4">
+              About School
+            </h2>
+          </div>
+          <div className="p-10 text-sm md:text-lg">
+            <p>{schoolAboutData.aboutSchoolDescription}</p>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

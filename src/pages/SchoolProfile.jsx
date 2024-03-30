@@ -85,60 +85,6 @@ function SchoolProfile() {
     },
   ];
 
-  const curriculumData = [
-    {
-      class: "Class 1",
-      subjects: ["Math", "Science", "History", "English", "Urdu"],
-    },
-    {
-      class: "Class 2",
-      subjects: ["Geography", "Physics", "Biology"],
-    },
-    {
-      class: "Class 3",
-      subjects: ["Geography", "Physics", "Biology"],
-    },
-    {
-      class: "Class 4",
-      subjects: ["Geography", "Physics", "Biology"],
-    },
-    {
-      class: "Class 5",
-      subjects: ["Geography", "Physics", "Biology"],
-    },
-  ];
-
-  const schoolFeeStructure = [
-    {
-      className: "PG - Nursery - KG",
-      depositFee: 10000,
-      admissionFee: 5000,
-      tuitionFee: 3800,
-      examFee: 2000,
-    },
-    {
-      className: "1 - 5",
-      depositFee: 10000,
-      admissionFee: 5000,
-      tuitionFee: 3900,
-      examFee: 2000,
-    },
-    {
-      className: "6 - 8",
-      depositFee: 10000,
-      admissionFee: 5000,
-      tuitionFee: 4300,
-      examFee: 2000,
-    },
-    {
-      className: "9 - 10",
-      depositFee: 15000,
-      admissionFee: 8000,
-      tuitionFee: 5400,
-      examFee: 2000,
-    },
-  ];
-
   const schoolImages = [
     "https://www.soe.edu.pk/images/albums/School%20of%20Excellence/img%20(2).JPG",
     "https://www.soe.edu.pk/images/albums/School%20of%20Excellence/img%20(1).JPG",
@@ -223,11 +169,9 @@ function SchoolProfile() {
       case "faculty":
         return <SchoolFaculty data={facultyDetails} schoolID={schoolID} />;
       case "curriculum":
-        return <SchoolCurriculum data={curriculumData} schoolID={schoolID} />;
+        return <SchoolCurriculum schoolID={schoolID} />;
       case "fee":
-        return (
-          <SchoolFeeStructure data={schoolFeeStructure} schoolID={schoolID} />
-        );
+        return <SchoolFeeStructure schoolID={schoolID} />;
       case "gallery":
         return <SchoolGallery images={schoolImages} schoolID={schoolID} />;
       case "facilities":
@@ -309,13 +253,13 @@ function SchoolProfile() {
             >
               ADMISSION DETAILS
             </button>
-            <button
+            {/* <button
               className={buttonStyle("faculty")}
               onClick={(e) => setComponent(e.target.value)}
               value="faculty"
             >
               FACULTY
-            </button>
+            </button> */}
             <button
               className={buttonStyle("curriculum")}
               onClick={(e) => setComponent(e.target.value)}

@@ -53,7 +53,7 @@ function SchoolCurriculum({ data, schoolID }) {
         <div className="w-full md:w-3/4 xl:w-2/3 bg-yellow rounded-lg shadow-xl overflow-hidden">
           <div className="bg-red-600 p-8">
             <h2 className="text-3xl font-bold text-white mb-4">
-              Student Teacher Details
+              Other Details:
             </h2>
           </div>
           <div className="p-8 space-y-4 text-left bg-gray-50">
