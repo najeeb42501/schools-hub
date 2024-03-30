@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-function SchoolContact() {
+function SchoolContact({ schoolID }) {
+  const [schoolContactData, setSchoolContactData] = useState({});
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/getSchoolData/school-contact/${schoolID}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch schools data");
+        }
+        const data = await response.json();
+
+        console.log("Schools : ", data);
+        setSchoolContactData(data); // Store the fetched data in state
+      } catch (error) {
+        console.error("Error fetching schools data:", error);
+      }
+    };
+
+    fetchData(); // Call the function to fetch data
+  }, []);
   return (
     <div className="bg-gray-100 p-6 rounded-md shadow-md">
       <h2 className="text-3xl text-center font-bold mb-4">Contact Details</h2>
@@ -10,7 +31,10 @@ function SchoolContact() {
             <i className="fas fa-phone-alt"></i>
           </span>
           <p>
-            Phone Number: <span className="font-semibold">071-5804400</span>
+            Phone Number:{" "}
+            <span className="font-semibold">
+              {schoolContactData.schoolMobileNo}
+            </span>
           </p>
         </div>
         <div className="flex items-center">
@@ -18,7 +42,10 @@ function SchoolContact() {
             <i className="fas fa-phone-alt"></i>
           </span>
           <p>
-            Email: <span className="font-semibold">servechab@gmail.com</span>
+            Email:{" "}
+            <span className="font-semibold">
+              {schoolContactData.schoolEmail}
+            </span>
           </p>
         </div>
         <div className="flex items-center">
@@ -26,7 +53,10 @@ function SchoolContact() {
             <i className="fas fa-phone-alt"></i>
           </span>
           <p>
-            Website: <span className="font-semibold">soe.edu.pk</span>
+            Website:{" "}
+            <span className="font-semibold">
+              {schoolContactData.schoolWebsite}
+            </span>
           </p>
         </div>
         <div className="flex items-center">
@@ -35,7 +65,9 @@ function SchoolContact() {
           </span>
           <p>
             Location:{" "}
-            <span className="font-semibold">School Address, City</span>
+            <span className="font-semibold">
+              {schoolContactData.schoolAddress}y
+            </span>
           </p>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SchoolAbout from "../components/schoolprofile_preview_components/SchoolAbout";
 import SchoolFaculty from "../components/schoolprofile_preview_components/SchoolFaculty";
@@ -10,23 +10,37 @@ import SchoolAdmission from "../components/schoolprofile_preview_components/Scho
 import SchoolFacilities from "../components/schoolprofile_preview_components/SchoolFacilities";
 import SchoolOverview from "../components/schoolprofile_preview_components/SchoolOverview";
 import SchoolReviews from "../components/schoolprofile_preview_components/SchoolReviews";
+const base_url = "http://localhost:5000/images/";
 
 function SchoolProfile() {
   const { schoolID } = useParams();
-  console.log("school id : ", schoolID);
   const [component, setComponent] = useState("overview");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const schoolGenInfo = {
-    level: "Secondary/Primary",
-    system: "Sindh Board Matriculation",
-    medium: "English",
-    schoolingType: "Boys / Girls",
-    accreditations: ["Sindh board"],
-    averageClassSize: "20x24",
-    enrolledStudents: 650,
-    numberOfTeachers: 40,
-    studentTeacherRatio: "65/4",
-  };
+  console.log("school id : ", schoolID);
+
+  const [schoolOverviewData, setSchoolOverviewData] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/getSchoolData/school-overview/${schoolID}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch schools data");
+        }
+        const data = await response.json();
+        console.log("School Overview Data Res: ", data);
+        // console.log("Schools : ", data);
+        setSchoolOverviewData(data); // Store the fetched data in state
+      } catch (error) {
+        console.error("Error fetching schools data:", error);
+      }
+    };
+
+    fetchData(); // Call the function to fetch data
+  }, []);
 
   const facultyDetails = [
     {
@@ -195,148 +209,167 @@ function SchoolProfile() {
     // Add more reviews as needed
   ];
 
+  const buttonStyle = (value) =>
+    `hover:bg-blue-500 text-white font-semibold p-4 w-full ${
+      component === value ? "bg-gray" : "bg-yellow"
+    }`;
+
   const renderComponent = () => {
     switch (component) {
       case "about":
-        return <SchoolAbout />;
+        return <SchoolAbout schoolID={schoolID} />;
       case "admission":
-        return <SchoolAdmission />;
+        return <SchoolAdmission schoolID={schoolID} />;
       case "faculty":
-        return <SchoolFaculty data={facultyDetails} />;
+        return <SchoolFaculty data={facultyDetails} schoolID={schoolID} />;
       case "curriculum":
-        return <SchoolCurriculum data={curriculumData} />;
+        return <SchoolCurriculum data={curriculumData} schoolID={schoolID} />;
       case "fee":
-        return <SchoolFeeStructure data={schoolFeeStructure} />;
+        return (
+          <SchoolFeeStructure data={schoolFeeStructure} schoolID={schoolID} />
+        );
       case "gallery":
-        return <SchoolGallery images={schoolImages} />;
+        return <SchoolGallery images={schoolImages} schoolID={schoolID} />;
       case "facilities":
         return (
           <SchoolFacilities
             facilities={schoolFacilities}
             activities={schoolActivities}
+            schoolID={schoolID}
           />
         );
       case "contact":
-        return <SchoolContact />;
+        return <SchoolContact schoolID={schoolID} />;
       case "reviews":
         return <SchoolReviews reviews={schoolReviews} />;
       default:
-        return <SchoolOverview data={schoolGenInfo} />;
+        return <SchoolOverview data={schoolOverviewData} schoolID={schoolID} />;
     }
   };
 
+  const toggleSidebar = () => setIsMenuOpen(!isMenuOpen);
+
   // Function to determine button style
-  const buttonStyle = (value) => {
-    return `hover:bg-white p-4 border border-black ${
-      component === value ? "bg-white" : ""
-    }`;
-  };
+  // const buttonStyle = (value) => {
+  //   return `hover:bg-white p-4 border border-black ${
+  //     component === value ? "bg-white" : ""
+  //   }`;
+  // };
 
   return (
     <>
-      <div className="relative text-center justify-center mb-24">
-        <img
-          className="w-full h-[10rem] md:h-[20rem] object-cover"
-          src="https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt=""
-        />
-        <div className="absolute bottom-[-30%] left-1/2 transform -translate-x-1/2">
+      <div className="bg-gray-200">
+        {/* Cover and Profile Photo */}
+        <div className="relative">
           <img
-            className="rounded-full border border-black w-52 md:w-80"
-            src="https://png.pngtree.com/template/20190515/ourmid/pngtree-one-word-school-logo-image_149831.jpg"
-            alt=""
+            className="w-full h-56 object-cover"
+            src={`${base_url}` + `${schoolOverviewData.coverPhoto}`}
+            alt="School Cover"
           />
+          <div className="absolute bottom-0 transform translate-y-1/2 left-1/2 -translate-x-1/2">
+            <img
+              className="rounded-full w-40 h-40 md:w-60 md:h-60 border-4 border-white"
+              src={`${base_url}` + `${schoolOverviewData.schoolProfilePhoto}`}
+              alt="School Logo"
+            />
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col items-center gap-3 m-10">
-        <h1 className="text-5xl font-bold">The City School</h1>
-        <h1>Seconday School / Primary | Boys & Girls</h1>
-        {/* <i> Founded: SINCE 1999 </i> */}
-        <h1 className="font-xl font-bold"> Mission:</h1>
-        <p className="text-center">
-          Mission of SOE is to establish, sustain and enhance itself as a
-          quality-centric educational institution that provides excellent
-          academic environment and opportunities for creating educated,
-          productive, and responsible citizens of Pakistan through intellectual,
-          and personal growth
-        </p>
-      </div>
-      <div className="grid grid-cols-6">
-        <div className="flex flex-col col-span-1 bg-gray-400  h-full">
+        <div>
+          <h1 className="text-4xl pt-36 md:text-5xl font-extrabold text-center text-gray-800 mb-10">
+            {schoolOverviewData.schoolName}
+          </h1>
+        </div>
+        <div className="md:hidden fixed top-0 left-0 z-50">
           <button
-            className={buttonStyle("overview")}
-            onClick={(e) => setComponent(e.target.value)}
-            value="overview"
+            className="p-4 bg-blue-500 text-white"
+            onClick={toggleSidebar}
           >
-            OVERVIEW
+            Menu
           </button>
-          <button
-            className={buttonStyle("admission")}
-            onClick={(e) => setComponent(e.target.value)}
-            value="admission"
+        </div>
+        {/* Sidebar + Content */}
+        <div className={`md:flex  md:items-start`}>
+          {/* Updated Sidebar with dynamic classes for showing/hiding */}
+          <div
+            className={`sidebar bg-black text-blue-100 w-64 space-y-6 py-7 px-2 transition-transform duration-300 ease-in-out ${
+              isMenuOpen ? "translate-x-0" : "-translate-x-full"
+            } md:translate-x-0`}
           >
-            ADMISSION DETAILS
-          </button>
-          <button
-            className={buttonStyle("faculty")}
-            onClick={(e) => setComponent(e.target.value)}
-            value="faculty"
-          >
-            FACULTY
-          </button>
-          <button
-            className={buttonStyle("curriculum")}
-            onClick={(e) => setComponent(e.target.value)}
-            value="curriculum"
-          >
-            CURRICULUM
-          </button>
+            {/* Navigation Buttons... */}
+            <button
+              className={buttonStyle("overview")}
+              onClick={() => setComponent("overview")}
+            >
+              OVERVIEW
+            </button>
+            <button
+              className={buttonStyle("admission")}
+              onClick={(e) => setComponent(e.target.value)}
+              value="admission"
+            >
+              ADMISSION DETAILS
+            </button>
+            <button
+              className={buttonStyle("faculty")}
+              onClick={(e) => setComponent(e.target.value)}
+              value="faculty"
+            >
+              FACULTY
+            </button>
+            <button
+              className={buttonStyle("curriculum")}
+              onClick={(e) => setComponent(e.target.value)}
+              value="curriculum"
+            >
+              CURRICULUM
+            </button>
 
-          <button
-            className={buttonStyle("fee")}
-            onClick={(e) => setComponent(e.target.value)}
-            value="fee"
-          >
-            FEE STRUCTURE
-          </button>
-          <button
-            className={buttonStyle("gallery")}
-            onClick={(e) => setComponent(e.target.value)}
-            value="gallery"
-          >
-            GALLERY
-          </button>
-          <button
-            className={buttonStyle("facilities")}
-            onClick={(e) => setComponent(e.target.value)}
-            value="facilities"
-          >
-            Facilities & Activities
-          </button>
-          <button
-            className={buttonStyle("about")}
-            onClick={(e) => setComponent(e.target.value)}
-            value="about"
-          >
-            ABOUT
-          </button>
-          <button
-            className={buttonStyle("contact")}
-            onClick={(e) => setComponent(e.target.value)}
-            value="contact"
-          >
-            CONTACT
-          </button>
-          <button
-            className={buttonStyle("reviews")}
-            onClick={(e) => setComponent(e.target.value)}
-            value="reviews"
-          >
-            Reviews & Testimonials
-          </button>
-        </div>
-        <div className="col-span-5 px-4 py-2 md:px-24 md:py-10 ">
-          {renderComponent()}
+            <button
+              className={buttonStyle("fee")}
+              onClick={(e) => setComponent(e.target.value)}
+              value="fee"
+            >
+              FEE STRUCTURE
+            </button>
+            <button
+              className={buttonStyle("gallery")}
+              onClick={(e) => setComponent(e.target.value)}
+              value="gallery"
+            >
+              GALLERY
+            </button>
+            <button
+              className={buttonStyle("facilities")}
+              onClick={(e) => setComponent(e.target.value)}
+              value="facilities"
+            >
+              Facilities & Activities
+            </button>
+            <button
+              className={buttonStyle("about")}
+              onClick={(e) => setComponent(e.target.value)}
+              value="about"
+            >
+              ABOUT
+            </button>
+            <button
+              className={buttonStyle("contact")}
+              onClick={(e) => setComponent(e.target.value)}
+              value="contact"
+            >
+              CONTACT
+            </button>
+            <button
+              className={buttonStyle("reviews")}
+              onClick={(e) => setComponent(e.target.value)}
+              value="reviews"
+            >
+              Reviews & Testimonials
+            </button>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1 text-2xl font-bold">{renderComponent()}</div>
         </div>
       </div>
     </>

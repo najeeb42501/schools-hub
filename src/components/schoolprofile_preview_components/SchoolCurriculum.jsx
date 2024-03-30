@@ -1,25 +1,65 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-function SchoolCurriculum({ data }) {
+function SchoolCurriculum({ data, schoolID }) {
+  const [schoolCourseData, setSchoolCourseData] = useState({});
+  console.log("schoolid: ", schoolID);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/getSchoolData/school-curriculum/${schoolID}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch schools data");
+        }
+        const data = await response.json();
+
+        console.log("Schools : ", data);
+        setSchoolCourseData(data); // Store the fetched data in state
+      } catch (error) {
+        console.error("Error fetching schools data:", error);
+      }
+    };
+
+    fetchData(); // Call the function to fetch data
+  }, []);
   return (
     <div className="text-center">
-      <h1 className="text-3xl font-bold py-4">CURRICULUM</h1>
-      <div className="grid grid-cols-2 gap-4">
-        {data.map((item, index) => (
-          <div key={index} className="mb-4">
-            <h1 className="font-bold text-2xl my-4 ">{item.class}</h1>
-            <div className="grid grid-cols-1 gap-2">
-              {item.subjects.map((subjectName, subIndex) => (
-                <h1
-                  key={subIndex}
-                  className="bg-gray-200 border border-gray-400 text-lg"
-                >
-                  {subjectName}
-                </h1>
-              ))}
-            </div>
+      <h1 className="text-3xl font-bold py-4">School Curriculum Details</h1>
+      <div className="flex flex-col gap-10 justify-center items-center mx-auto">
+        {/* First Card */}
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-yellow p-8">
+            <h2 className="text-3xl font-extrabold text-white mb-4">
+              Curriculum Followed:
+            </h2>
           </div>
-        ))}
+          <ul className="p-8 space-y-4 text-left bg-gray-50">
+            {schoolCourseData.courses &&
+              schoolCourseData.courses.map((course) => {
+                return (
+                  <li className="text-xl">
+                    {" "}
+                    <span> >>> </span>
+                    {course}
+                  </li>
+                );
+              })}
+          </ul>
+        </div>
+
+        {/* Second Card */}
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-yellow rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-red-600 p-8">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Student Teacher Details
+            </h2>
+          </div>
+          <div className="p-8 space-y-4 text-left bg-gray-50">
+            <p>{schoolCourseData.otherDetails}</p>
+          </div>
+        </div>
       </div>
     </div>
   );

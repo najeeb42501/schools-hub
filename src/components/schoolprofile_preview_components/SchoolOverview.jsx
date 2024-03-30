@@ -2,61 +2,70 @@ import React from "react";
 
 function SchoolOverview({ data }) {
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-center">OVERVIEW:</h1>
-      <div className="flex flex-col md:flex-row gap-4">
-        <div className="sm:w-1/2 card card-side bg-base-100 shadow-xl my-5 p-6">
-          <ul>
-            <li>• School Level: {data.level}</li>
-            <li>• School System: {data.system}</li>
-            <li>• School Medium: {data.medium}</li>
-            <li>• Schooling Type: {data.schoolingType}</li>
-            <li>• Accreditations: {data.accreditations}</li>
+    <div className="px-4 py-10  min-h-screen bg-gray-100">
+      <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 mb-10">
+        Overview
+      </h1>
+      <div className="flex flex-col gap-10 justify-center items-center mx-auto">
+        {/* First Card */}
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-yellow p-8">
+            <h2 className="text-3xl font-extrabold text-white mb-4">
+              School Details
+            </h2>
+          </div>
+          <ul className="p-8 space-y-4 bg-gray-50">
+            {/* Increased spacing and added a subtle background for the content area */}
+            <li className="text-xl">
+              <span className="font-semibold">School Level:</span>{" "}
+              {data.schoolLevel}
+            </li>
+            <li className="text-xl">
+              <span className="font-semibold">School System:</span>{" "}
+              {data.schoolSystem}
+            </li>
+            <li className="text-xl">
+              <span className="font-semibold">School Medium:</span>{" "}
+              {data.schoolMedium}
+            </li>
+            <li className="text-xl">
+              <span className="font-semibold">Schooling Type:</span>{" "}
+              {data.schoolingType}
+            </li>
+            <li className="text-xl">
+              <span className="font-semibold">Accreditations:</span>{" "}
+              {data.accreditations}
+            </li>
           </ul>
         </div>
-        <div className="sm:w-1/2 card card-side bg-base-100 shadow-xl my-5 p-6">
-          <ul>
-            <li>• Enrolled Students: {data.enrolledStudents} </li>
-            <li>• Number of Teachers: {data.numberOfTeachers}</li>
-            <li>• Average Class Size: {data.averageClassSize}</li>
-            <li>• Student Teacher Ratio: {data.studentTeacherRatio}</li>
+
+        {/* Second Card */}
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-yellow rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-red-600 p-8">
+            {" "}
+            {/* Similar adjustments as the first card for consistency */}
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Student Teacher Details
+            </h2>
+          </div>
+          <ul className="p-8 space-y-4 bg-gray-50">
+            <li className="text-xl">
+              <span className="font-semibold">Enrolled Students:</span>{" "}
+              {data.enrolledStudents}
+            </li>
+            <li className="text-xl">
+              <span className="font-semibold">Number of Teachers:</span>{" "}
+              {data.numberOfTeachers}
+            </li>
+            <li className="text-xl">
+              <span className="font-semibold">Average Class Size:</span>{" "}
+              {data.averageClassSize}
+            </li>
+            <li className="text-xl">
+              <span className="font-semibold">Student Teacher Ratio:</span>{" "}
+              {data.studentTeacherRatio}
+            </li>
           </ul>
-        </div>
-      </div>
-      <div className="card card-side bg-base-100 shadow-xl my-5">
-        <figure>
-          <img src="https://www.soe.edu.pk/profile_images/principal.jpg" />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">Mr.Jamal Uddin Unar </h2>
-          <h2 className="font-bold  ">Principal</h2>
-          <p>
-            I visualize a terrific and excellent future of School of Excellence
-            which would gratify the needs of thousands of young students whose
-            rich intellectual potentialities would be allowed to explore
-            properly in SOE. The dynamic minds of the region will certainly
-            contribute to make SOE a true seat of learning and sanctuary of
-            peace, serenity and harmony.
-          </p>
-        </div>
-      </div>
-      <div className="card card-side bg-base-100 shadow-xl my-5">
-        <figure>
-          <img src="https://www.soe.edu.pk/profile_images/servech.jpg" />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">Mr.Jamal Uddin Unar </h2>
-          <h2 className="font-bold  ">Vice Pricipal</h2>
-          <p>
-            The quest of purposeful knowledge symbolizes the only object of
-            education that can’t be substituted by any other aim. As a student
-            here, you are a member of a privileged and distinguished cluster.
-            Learning at our school is based on the fundamental principles of
-            life. Teaching the children to be courageous, confident,
-            disciplined, responsible and loyal one is the first precedence at
-            SOE. Education at our school provides a foundation for a lifetime
-            learning to become radiant stars of future.
-          </p>
         </div>
       </div>
     </div>
