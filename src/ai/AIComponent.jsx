@@ -1,108 +1,87 @@
 import React, { useState } from "react";
+import axios from "axios"; // Import Axios
+const apiKey = process.env.API_KEY;
 
-function AIComponent() {
-  const [input1, setInput1] = useState("");
-  const [input2, setInput2] = useState("");
-  const [input3, setInput3] = useState("");
-  const [input4, setInput4] = useState("");
+function SimpleAIComponent() {
+  console.log("API KEY : ", apiKey);
+  const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const generateResponse = () => {
-    // You can implement your AI logic here to generate a response based on the inputs
-    // For demonstration purposes, let's just concatenate the inputs
-    const generatedResponse = `${input1} ${input2} ${input3} ${input4}`;
-    setResponse(generatedResponse);
+  const handleSubmit = async () => {
+    setLoading(true);
+    console.log("submit prompt");
+
+    const options = {
+      method: "POST",
+      body: JSON.stringify({
+        message: prompt,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      const response = await fetch("http://localhost:5000/ai", options);
+      const data = await response.json();
+      console.log("GHPT RES : ", data);
+      setResponse(data.choices[0].message);
+    } catch (error) {
+      console.error("Error fetching response from backend:", error);
+    }
+    setLoading(false);
   };
-
   return (
-    <div className="flex h-full">
-      {/* First Column */}
-      <div className="w-1/2 p-4 bg-gray-100 flex flex-col justify-center items-center">
-        <h2 className="text-2xl font-semibold text-center mb-4">
-          Chat with AI
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4 py-10">
+      <div className="w-full md:w-2/3 p-8  text-center  bg-white rounded-lg shadow-md">
+        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
+          Ask AI
         </h2>
-        <div className="mb-4 w-full">
+        <h2 className="text-2xl font-bold text-center text-yellow mb-6">
+          Make Your Child Future Bright
+        </h2>
+        <div className="mb-6 w-full">
           <label
-            htmlFor="input1"
+            htmlFor="prompt"
             className="block text-sm font-medium text-gray-700 mb-2"
           >
-            Input 1
+            Your Prompt
           </label>
-          <input
-            id="input1"
-            type="text"
-            value={input1}
-            onChange={(e) => setInput1(e.target.value)}
-            placeholder="Enter input 1"
-            className="w-full rounded border border-gray-400 p-2"
-          />
-        </div>
-        <div className="mb-4 w-full">
-          <label
-            htmlFor="input2"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Input 2
-          </label>
-          <input
-            id="input2"
-            type="text"
-            value={input2}
-            onChange={(e) => setInput2(e.target.value)}
-            placeholder="Enter input 2"
-            className="w-full rounded border border-gray-400 p-2"
-          />
-        </div>
-        <div className="mb-4 w-full">
-          <label
-            htmlFor="input3"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Input 3
-          </label>
-          <input
-            id="input3"
-            type="text"
-            value={input3}
-            onChange={(e) => setInput3(e.target.value)}
-            placeholder="Enter input 3"
-            className="w-full rounded border border-gray-400 p-2"
-          />
-        </div>
-        <div className="mb-4 w-full">
-          <label
-            htmlFor="input4"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Input 4
-          </label>
-          <input
-            id="input4"
-            type="text"
-            value={input4}
-            onChange={(e) => setInput4(e.target.value)}
-            placeholder="Enter input 4"
-            className="w-full rounded border border-gray-400 p-2"
+          <textarea
+            id="prompt"
+            rows={3}
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Enter your prompt here"
+            className="w-full rounded-md border border-gray-300 p-3 text-gray-700 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out"
+            style={{ resize: "vertical" }}
           />
         </div>
         <button
-          onClick={generateResponse}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full"
+          onClick={handleSubmit}
+          className={`w-1/4 text-white px-4 py-2 rounded-md transition duration-150 ease-in-out ${
+            loading ? "bg-gray-400" : "bg-gray-800 hover:bg-yellow"
+          } focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50`}
+          disabled={loading}
         >
-          Generate
+          {loading ? "Loading..." : "Submit"}
         </button>
       </div>
-      {/* Second Column */}
-      <div className="w-1/2 p-4 bg-gray-200 overflow-y-auto">
+      <div className="w-full md:w-2/3 p-8 bg-gray-200 rounded-lg shadow-md mt-6">
+        <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">
+          {" "}
+          Model Response:
+        </h1>
         <textarea
-          value={response}
+          value={response.content || ""}
           readOnly
-          className="w-full h-full resize-none bg-gray-100 border border-gray-300 rounded p-2"
-          placeholder="Generated Response"
+          className="w-full h-64 resize-none rounded-md border border-gray-300 p-3 text-gray-700"
+          placeholder="AI's Response"
         />
       </div>
     </div>
   );
 }
 
-export default AIComponent;
+export default SimpleAIComponent;

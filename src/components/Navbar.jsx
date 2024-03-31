@@ -33,6 +33,11 @@ function Navbar() {
           <Link to="/blogs" className="hover:text-yellow">
             Blogs
           </Link>
+          {state.type === "user" ? (
+            <Link to="/aibot" className="hover:text-yellow">
+              AI Bot
+            </Link>
+          ) : null}
           <Link to="/about" className="hover:text-yellow">
             About
           </Link>

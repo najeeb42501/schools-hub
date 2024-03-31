@@ -23,12 +23,13 @@ function SchoolsList({ schools = [] }) {
               />
             </figure>
             <div className="card-body py-2">
-              <h2 className="card-title">
+              <h2 className="card-title font-sans font-bold text-2xl">
                 {school.school_name}
-                <div className="badge badge-error">Admission Open!</div>
               </h2>
-              <p>{school.schoolLevel || "Secondary School"}</p>
-              <p>Address: {school.city}</p>
+              <p className="font-semibold">
+                {school.schoolLevel || "Secondary School"}
+              </p>
+              <p className="font-semibold">Address: {school.city}</p>
               <div className="card-actions justify-center">
                 <Link
                   to={`/schoolprofile/${school._id}`}

@@ -39,7 +39,7 @@ function App() {
           }
         />
         <Route
-          path="/ai"
+          path="/aibot"
           element={
             <UserElement user={state}>
               <AIComponent />

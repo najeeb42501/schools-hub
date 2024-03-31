@@ -156,7 +156,7 @@ function SchoolProfile() {
   ];
 
   const buttonStyle = (value) =>
-    `hover:bg-blue-500 text-white font-semibold p-4 w-full ${
+    `hover:bg-gray-600 text-white font-semibold p-4 w-full ${
       component === value ? "bg-gray" : "bg-yellow"
     }`;
 
@@ -218,7 +218,7 @@ function SchoolProfile() {
             />
           </div>
         </div>
-        <div>
+        <div className="">
           <h1 className="text-4xl pt-36 md:text-5xl font-extrabold text-center text-gray-800 mb-10">
             {schoolOverviewData.schoolName}
           </h1>
@@ -235,7 +235,7 @@ function SchoolProfile() {
         <div className={`md:flex  md:items-start`}>
           {/* Updated Sidebar with dynamic classes for showing/hiding */}
           <div
-            className={`sidebar bg-black text-blue-100 w-64 space-y-6 py-7 px-2 transition-transform duration-300 ease-in-out ${
+            className={`sidebar bg-gray-800 text-blue-100 w-64 space-y-6 py-7 px-2 transition-transform duration-300 ease-in-out ${
               isMenuOpen ? "translate-x-0" : "-translate-x-full"
             } md:translate-x-0`}
           >
