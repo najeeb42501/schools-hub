@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
-function SearchComponent() {
+function SearchComponent({ onSearch }) {
+  const [searchInput, setSearchInput] = useState("");
+
+  const handleInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const handleSearchClick = () => {
+    onSearch(searchInput); // Pass the search input back to the parent component
+  };
+  console.log("search ", searchInput);
   return (
     <div className="w-full flex flex-col justify-center items-center">
       <img
@@ -15,6 +25,8 @@ function SearchComponent() {
             <input
               className="input input-bordered join-item"
               placeholder="Search"
+              value={searchInput}
+              onChange={handleInputChange}
             />
           </div>
         </div>
@@ -27,7 +39,12 @@ function SearchComponent() {
           <option>Type</option>
         </select>
         <div className="indicator">
-          <button className="btn join-item hover:bg-yellow">Search</button>
+          <button
+            className="btn join-item hover:bg-yellow"
+            onClick={handleSearchClick}
+          >
+            Search
+          </button>
         </div>
       </div>
     </div>

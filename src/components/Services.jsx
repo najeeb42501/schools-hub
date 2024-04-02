@@ -32,8 +32,9 @@ function Services() {
         <div className="flex flex-col gap-3  shadow-inner bg-gray-200 p-8  ">
           <FontAwesomeIcon icon={faRobot} className=" sm:text-8xl text-5xl " />
           <h1 className="text-xl font-bold ">
-            AI-Powered <br />
-            Recommendations
+            Ask-AI
+            <br />
+            Child Guidance
           </h1>
           <p>
             Detailed information about schools, including facilities,
