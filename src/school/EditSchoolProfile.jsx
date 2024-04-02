@@ -44,14 +44,14 @@ function EditSchoolProfile() {
 
   // Function to determine button style
   const buttonStyle = (value) => {
-    return `hover:bg-white p-4 border border-black ${
-      component === value ? "bg-white" : ""
+    return `hover:bg-gray-700 p-4 border border-black ${
+      component === value ? "bg-yellow" : ""
     }`;
   };
   return (
     <div>
       <div className="grid grid-cols-6">
-        <div className="flex flex-col col-span-1 bg-gray-400  h-full">
+        <div className="flex flex-col col-span-1 bg-gray-800 text-white h-full">
           <button
             className={buttonStyle("overview")}
             onClick={(e) => setComponent(e.target.value)}

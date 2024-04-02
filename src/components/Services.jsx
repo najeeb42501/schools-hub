@@ -26,7 +26,7 @@ function Services() {
           </h1>
           <p>
             Detailed information about schools, including facilities,
-            curriculum, faculty, and extracurricular activities
+            curriculum, fee structure, and extracurricular activities
           </p>
         </div>
         <div className="flex flex-col gap-3  shadow-inner bg-gray-200 p-8  ">
@@ -37,8 +37,8 @@ function Services() {
             Child Guidance
           </h1>
           <p>
-            Detailed information about schools, including facilities,
-            curriculum, faculty, and extracurricular activities
+            Engage with our AI for personalized child guidance and schooling
+            queries.
           </p>
         </div>
         <div className="flex flex-col gap-3  shadow-inner bg-gray-200 p-8 ">
@@ -50,8 +50,8 @@ function Services() {
             Public Feedback <br /> & Reviews
           </h1>
           <p>
-            Detailed information about schools, including facilities,
-            curriculum, faculty, and extracurricular activities
+            Evaluate schools with ratings, and feedback from parents and
+            students. Also, share yours.
           </p>
         </div>
         <div className="flex flex-col gap-3  shadow-inner bg-gray-200 p-8 ">
@@ -63,8 +63,8 @@ function Services() {
             Safe and Secure <br /> Environment
           </h1>
           <p>
-            Detailed information about schools, including facilities,
-            curriculum, faculty, and extracurricular activities
+            Stay informed with educational blogs covering trends, tips, and
+            insights for a holistic schooling experience.
           </p>
         </div>
       </div>

@@ -353,8 +353,11 @@ function EditSchoolOverview({ id }) {
                 />
               </div>
 
-              <div className="col-span-2">
-                <button type="submit" className="btn btn-primary w-full">
+              <div className="col-span-2 px-80">
+                <button
+                  type="submit"
+                  className="btn bg-blue-500 text-white border-blue-700 hover:bg-blue-700 w-full"
+                >
                   Save
                 </button>
               </div>

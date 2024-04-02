@@ -206,7 +206,7 @@ function SchoolProfile() {
         {/* Cover and Profile Photo */}
         <div className="relative">
           <img
-            className="w-full h-56 object-cover"
+            className="w-full h-56 z-[-1] object-cover"
             src={`${base_url}` + `${schoolOverviewData.coverPhoto}`}
             alt="School Cover"
           />

@@ -41,7 +41,7 @@ function SchoolOverview({ data }) {
 
         {/* Second Card */}
         <div className="w-full md:w-3/4 xl:w-2/3 bg-yellow rounded-lg shadow-xl overflow-hidden">
-          <div className="bg-red-600 p-8">
+          <div className="bg-yellow p-8">
             {" "}
             {/* Similar adjustments as the first card for consistency */}
             <h2 className="text-3xl font-bold text-white mb-4">
