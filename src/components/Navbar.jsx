@@ -23,13 +23,15 @@ function Navbar() {
 
   return (
     <header className="relative p-4 z-[1000] bg-gray-900 glass text-white w-full border border-black">
-      <nav className="flex items-center justify-between md:mx-20 mx-6 ">
+      <nav className="flex items-center justify-between md:mx-14 mx-6 ">
         <div>
           <Link to="/">
-            <h1 className="text-2xl font-bold">Schools Hub</h1>
+            <h1 className="text-4xl py-2 text-yellow font-extrabold text-yellow-500 hover:text-yellow-400 transition-colors duration-300 ease-in-out shadow-lg hover:shadow-xl transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+              Schools Hub
+            </h1>
           </Link>
         </div>
-        <div className="hidden  text-xl font-bold md:flex space-x-10">
+        <div className="hidden text-xl font-bold md:flex space-x-10">
           <Link to="/" className="hover:text-yellow">
             Home
           </Link>

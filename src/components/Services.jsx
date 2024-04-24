@@ -10,8 +10,9 @@ import {
 function Services() {
   return (
     <div className="w-full ">
-      <h1 className="text-5xl font-bold text-center font-sans ">
-        Choose Ideal Schools For Your Child{" "}
+      <h1 className="text-5xl font-bold  font-sans bg-yellow  "> </h1>
+      <h1 className="text-5xl text-center py-20 bg-yellow font-extrabold text-yellow-500 hover:text-yellow-400 transition-colors duration-300 ease-in-out shadow-lg hover:shadow-xl transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+        Choose Ideal Schools For Your Child
       </h1>
 
       <div className="flex flex-col md:flex-row w-full px-20 justify-between text-center  gap-8 items-center my-20  ">
@@ -20,7 +21,7 @@ function Services() {
             icon={faChalkboard}
             className=" sm:text-8xl text-5xl "
           />
-          <h1 className="text-xl font-bold ">
+          <h1 className="text-xl font-bold text-yellow ">
             Comprehensive <br />
             Schools Profile
           </h1>
@@ -31,7 +32,7 @@ function Services() {
         </div>
         <div className="flex flex-col gap-3  shadow-inner bg-gray-200 p-8  ">
           <FontAwesomeIcon icon={faRobot} className=" sm:text-8xl text-5xl " />
-          <h1 className="text-xl font-bold ">
+          <h1 className="text-xl font-bold  text-yellow ">
             Ask-AI
             <br />
             Child Guidance
@@ -46,7 +47,7 @@ function Services() {
             icon={faStarHalfStroke}
             className=" sm:text-8xl text-5xl "
           />
-          <h1 className="text-xl font-bold ">
+          <h1 className="text-xl font-bold text-yellow ">
             Public Feedback <br /> & Reviews
           </h1>
           <p>
@@ -59,8 +60,8 @@ function Services() {
             icon={faShieldHalved}
             className=" sm:text-8xl text-5xl "
           />
-          <h1 className="text-xl font-bold ">
-            Safe and Secure <br /> Environment
+          <h1 className="text-xl font-bold text-yellow  ">
+            Read Blogs <br /> Engage With Others
           </h1>
           <p>
             Stay informed with educational blogs covering trends, tips, and

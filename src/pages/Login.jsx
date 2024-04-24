@@ -59,8 +59,8 @@ function Login() {
     <div className="h-full w-full border-black border">
       <div className=" flex  h-[660px] ">
         <LoginPageSideComponent />
-        <div className="flex flex-col justify-center items-center border w-full md:w-3/5  pt-10">
-          <h1 className="text-3xl font-bold ">Sign In</h1>
+        <div className="flex flex-col  text-yellow font-bold justify-center items-center border w-full md:w-3/5  pt-10">
+          <h1 className="text-3xl  font-extrabold ">Sign In</h1>
 
           <Formik
             initialValues={initialValues}
@@ -93,7 +93,7 @@ function Login() {
                 />
                 <button
                   type="submit"
-                  className="btn glass bg-yellow"
+                  className="btn glass text-xl font-bold text-gray-800 bg-yellow hover:bg-gray-800 hover:text-white"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Signing In..." : "Sign In"}

@@ -10,8 +10,13 @@ function LoginPageSideComponent() {
           alt=""
         />
         <div className="absolute">
-          <h1 className="text-3xl font-bold ">Schools Hub</h1>
-          <p>Hello, welcome to our platfrom!</p>
+          <h1 className="text-8xl py-2 text-white font-extrabold text-yellow-500 hover:text-yellow-400 transition-colors duration-300 ease-in-out shadow-lg hover:shadow-xl transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none shadow-outline">
+            Learn
+            <br /> Grow <br />
+            Conquer
+          </h1>
+
+          <p></p>
         </div>
       </div>
     </>

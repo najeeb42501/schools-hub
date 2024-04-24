@@ -50,7 +50,7 @@ function Signup() {
     <div className="h-full w-full border-black border">
       <div className=" flex   h-[660px]">
         <LoginPageSideComponent />
-        <div className="flex flex-col justify-center items-center border w-full md:w-3/5 pt-10 grow">
+        <div className="flex flex-col justify-center font-bold text-yellow items-center border w-full md:w-3/5 pt-10 grow">
           <h1 className="text-2xl text-center md:text-3xl font-bold ">
             Register Yourself On Our Platform!
           </h1>
@@ -118,7 +118,7 @@ function Signup() {
               />
               <button
                 type="submit"
-                className="bg-yellow hover:bg-black hover:text-yellow py-3 my-6 rounded font-bold"
+                className="btn glass text-xl font-bold text-gray-800 bg-yellow hover:bg-gray-800 hover:text-white"
               >
                 Sign Up
               </button>

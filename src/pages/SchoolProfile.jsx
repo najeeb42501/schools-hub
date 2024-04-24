@@ -206,11 +206,11 @@ function SchoolProfile() {
         {/* Cover and Profile Photo */}
         <div className="relative">
           <img
-            className="w-full h-56 z-[-1] object-cover"
+            className="w-full h-64 z-[-1] object-fill"
             src={`${base_url}` + `${schoolOverviewData.coverPhoto}`}
             alt="School Cover"
           />
-          <div className="absolute bottom-0 transform translate-y-1/2 left-1/2 -translate-x-1/2">
+          <div className="absolute bottom-10 transform translate-y-1/2 left-1/2 -translate-x-1/2">
             <img
               className="rounded-full w-40 h-40 md:w-60 md:h-60 border-4 border-white"
               src={`${base_url}` + `${schoolOverviewData.schoolProfilePhoto}`}
@@ -218,8 +218,8 @@ function SchoolProfile() {
             />
           </div>
         </div>
-        <div className="">
-          <h1 className="text-4xl pt-36 md:text-5xl font-extrabold text-center text-gray-800 mb-10">
+        <div className="bg-gray-800">
+          <h1 className="text-2xl pt-24 pb-4 md:text-5xl font-extrabold text-center text-white ">
             {schoolOverviewData.schoolName}
           </h1>
         </div>
@@ -235,9 +235,10 @@ function SchoolProfile() {
         <div className={`md:flex  md:items-start`}>
           {/* Updated Sidebar with dynamic classes for showing/hiding */}
           <div
-            className={`sidebar bg-gray-800 text-blue-100 w-64 space-y-6 py-7 px-2 transition-transform duration-300 ease-in-out ${
+            className={`bg-gray-800 text-blue-100 w-64 space-y-6 py-7 px-2 fixed inset-y-0 left-0 transform ${
               isMenuOpen ? "translate-x-0" : "-translate-x-full"
-            } md:translate-x-0`}
+            } md:relative md:translate-x-0 transition-transform duration-300 ease-in-out z-40`}
+            style={{ height: "100vh" }}
           >
             {/* Navigation Buttons... */}
             <button
