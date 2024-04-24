@@ -184,7 +184,7 @@ function SchoolProfile() {
       case "contact":
         return <SchoolContact schoolID={schoolID} />;
       case "reviews":
-        return <SchoolReviews reviews={schoolReviews} user={userType} />;
+        return <SchoolReviews reviews={schoolReviews} />;
       default:
         return <SchoolOverview data={schoolOverviewData} schoolID={schoolID} />;
     }
