@@ -10,6 +10,7 @@ import SchoolAdmission from "../components/schoolprofile_preview_components/Scho
 import SchoolFacilities from "../components/schoolprofile_preview_components/SchoolFacilities";
 import SchoolOverview from "../components/schoolprofile_preview_components/SchoolOverview";
 import SchoolReviews from "../components/schoolprofile_preview_components/SchoolReviews";
+
 const base_url = "http://localhost:5000/images/";
 
 function SchoolProfile() {
@@ -143,14 +144,12 @@ function SchoolProfile() {
       date: "November 15, 2023",
       comment: "Great school with amazing facilities. My child loves it here!",
       rating: 5,
-      avatar: "https://via.placeholder.com/150", // Replace with actual image URL
     },
     {
       reviewerName: "Qasim",
       date: "October 20, 2023",
       comment: "Good teachers and a supportive environment for students.",
       rating: 4,
-      avatar: "https://via.placeholder.com/150", // Replace with actual image URL
     },
     // Add more reviews as needed
   ];
@@ -185,7 +184,7 @@ function SchoolProfile() {
       case "contact":
         return <SchoolContact schoolID={schoolID} />;
       case "reviews":
-        return <SchoolReviews reviews={schoolReviews} />;
+        return <SchoolReviews reviews={schoolReviews} user={userType} />;
       default:
         return <SchoolOverview data={schoolOverviewData} schoolID={schoolID} />;
     }
