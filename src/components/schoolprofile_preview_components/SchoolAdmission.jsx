@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactQuill from "react-quill";
 
 function SchoolAdmission({ schoolID }) {
   const [schoolAdmissionData, setSchoolAdmissionData] = useState({});
@@ -58,8 +59,13 @@ function SchoolAdmission({ schoolID }) {
               Admission Process
             </h2>
           </div>
-          <div className="flex flex-row p-8 gap-6  bg-gray-50">
-            <p>{schoolAdmissionData.process}</p>
+          <div className="flex flex-row p-8 gap-6  font-normal bg-gray-50">
+            <p>{}</p>
+            <ReactQuill
+              value={schoolAdmissionData.process}
+              readOnly={true}
+              theme={null}
+            />
           </div>
         </div>
 
@@ -69,8 +75,12 @@ function SchoolAdmission({ schoolID }) {
               Admission Criteria
             </h2>
           </div>
-          <div className="flex flex-row p-8 gap-6 bg-gray-50">
-            <p>{schoolAdmissionData.criteria}</p>
+          <div className="flex flex-row p-8 gap-6 font-normal bg-gray-50">
+            <ReactQuill
+              value={schoolAdmissionData.criteria}
+              readOnly={true}
+              theme={null}
+            />
           </div>
         </div>
 
@@ -80,8 +90,12 @@ function SchoolAdmission({ schoolID }) {
               Required Documents
             </h2>
           </div>
-          <div className="flex flex-row p-8 gap-6  bg-gray-50">
-            <p>{schoolAdmissionData.requiredDocuments}</p>
+          <div className="flex flex-row p-8 gap-6 font-normal bg-gray-50">
+            <ReactQuill
+              value={schoolAdmissionData.requiredDocuments}
+              readOnly={true}
+              theme={null}
+            />
           </div>
         </div>
       </div>

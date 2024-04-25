@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   Avatar,
@@ -12,33 +12,73 @@ import {
 import { Rating } from "@mui/material";
 import { useAppContext } from "../../state/ContextAPI";
 
-function SchoolReviews({ reviews }) {
+function SchoolReviews() {
   const { state } = useAppContext();
   const userType = state.type;
+  const userName = state.username;
 
-  console.log("User type school profile :", state.type);
   const { schoolID } = useParams();
 
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
+  const [reviewsData, setReviewsData] = useState([]);
+  const [ratingError, setRatingError] = useState(false);
+  const [reviewError, setReviewError] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/getSchoolData/school-reviews/${schoolID}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch schools data");
+        }
+        const data = await response.json();
+
+        console.log("Schools Reviews : ", data);
+        setReviewsData(data); // Store the fetched data in state
+      } catch (error) {
+        console.error("Error fetching schools data:", error);
+      }
+    };
+
+    fetchData(); // Call the function to fetch data
+  }, []);
 
   const handleRatingChange = (event, newRating) => {
     setRating(newRating);
+    setRatingError(false); // Reset the rating error when a new rating is selected
   };
 
   const handleReviewChange = (event) => {
     setReview(event.target.value);
+    setReviewError(false); // Reset the review error when the review is typed
   };
 
   const handleSubmit = async () => {
+    if (rating === 0) {
+      setRatingError(true);
+    }
+    if (review.trim() === "") {
+      setReviewError(true);
+    }
+
+    if (rating === 0 || review.trim() === "") {
+      return;
+    }
+
     try {
-      const response = await fetch("/school/reviews/:id", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ rating, review }),
-      });
+      const response = await fetch(
+        `http://localhost:5000/editSchoolProfile/reviews/${schoolID}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ rating, review, userName }),
+        }
+      );
       if (response.ok) {
         console.log("Review submitted successfully");
         // Add code here to update the reviews state with the new review
@@ -52,8 +92,8 @@ function SchoolReviews({ reviews }) {
 
   return (
     <Container>
-      {userType == "user" && (
-        <Box mt={4}>
+      {userType === "user" && (
+        <Box className="mt-4">
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography variant="h4">Write a Review</Typography>
@@ -66,6 +106,11 @@ function SchoolReviews({ reviews }) {
                 precision={0.5}
                 onChange={handleRatingChange}
               />
+              {ratingError && (
+                <Typography variant="body2" color="error">
+                  Rating is required
+                </Typography>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -76,6 +121,8 @@ function SchoolReviews({ reviews }) {
                 fullWidth
                 value={review}
                 onChange={handleReviewChange}
+                error={reviewError}
+                helperText={reviewError && "Review is required"}
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,16 +138,10 @@ function SchoolReviews({ reviews }) {
         </Box>
       )}
 
-      <Box mt={4}>
+      <Box className="mt-4">
         <Typography variant="h4">Previous Reviews</Typography>
-        {reviews.map((review, index) => (
-          <Box
-            key={index}
-            mt={2}
-            p={2}
-            border="1px solid #ccc"
-            borderRadius={4}
-          >
+        {reviewsData.map((review, index) => (
+          <Box key={index} className="mt-2 p-2 border border-gray-300 rounded">
             <Grid container spacing={2}>
               <Grid item xs={2}>
                 <Avatar />

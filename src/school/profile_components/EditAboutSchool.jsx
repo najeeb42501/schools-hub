@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 function EditAboutSchool({ id }) {
   const [initialData, setInitialData] = useState({
@@ -18,7 +20,7 @@ function EditAboutSchool({ id }) {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
-        console.log("Response DATA SO : ", data); // Log the data to verify it's a JavaScript object
+        console.log("Response DATA SO : ", data);
         setInitialData({
           aboutSchoolDescription: data.aboutSchoolDescription,
           foundedDate: data.foundedDate,
@@ -83,11 +85,29 @@ function EditAboutSchool({ id }) {
       >
         <Form>
           <Field
-            as="textarea"
             name="aboutSchoolDescription"
-            className="block w-full px-4 py-2 text-gray-800 border rounded-lg focus:outline-none focus:border-blue-500 focus:ring"
-            rows="5"
-            placeholder="Enter description..."
+            render={({ field }) => (
+              <ReactQuill
+                value={field.value}
+                onChange={field.onChange(field.name)}
+                modules={{
+                  toolbar: [
+                    [{ header: "1" }, { header: "2" }, { font: [] }],
+                    [{ size: [] }],
+                    ["bold", "italic", "underline", "strike", "blockquote"],
+                    [
+                      { list: "ordered" },
+                      { list: "bullet" },
+                      { indent: "-1" },
+                      { indent: "+1" },
+                    ],
+                    ["link", "image", "video"],
+                    ["clean"],
+                  ],
+                }}
+                style={{ minHeight: "200px", height: "auto" }}
+              />
+            )}
           />
           <ErrorMessage
             name="aboutSchoolDescription"

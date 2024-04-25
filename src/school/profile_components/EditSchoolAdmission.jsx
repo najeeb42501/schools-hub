@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 function EditSchoolAdmission({ id }) {
   const [initialData, setInitialData] = useState({
@@ -10,8 +12,6 @@ function EditSchoolAdmission({ id }) {
     process: "",
     requiredDocuments: "",
   });
-
-  console.log("State Data : ", initialData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,19 +23,6 @@ function EditSchoolAdmission({ id }) {
           throw new Error("Failed to fetch data");
         }
         const data = await response.json();
-
-        // Extract only the date part without the time
-        const openingDate = new Date(data.openingDate)
-          .toISOString()
-          .split("T")[0];
-        const closingDate = new Date(data.closingDate)
-          .toISOString()
-          .split("T")[0];
-
-        // Create a new object with the extracted date parts
-        const extractedData = { ...data, openingDate, closingDate };
-
-        console.log("Extracted Data  : ", extractedData);
 
         setInitialData(data);
       } catch (error) {
@@ -57,14 +44,7 @@ function EditSchoolAdmission({ id }) {
   const handleSubmit = async (values) => {
     try {
       // Process form data or update state as needed
-      console.log("Admiision details Form data:", values);
-
-      // Convert dates to remove the time part
-      const formattedValues = {
-        ...values,
-        openingDate: new Date(values.openingDate).toISOString().split("T")[0],
-        closingDate: new Date(values.closingDate).toISOString().split("T")[0],
-      };
+      console.log("Admission details Form data:", values);
 
       // Send a PUT request to your backend API to update the data
       const response = await fetch(
@@ -74,7 +54,7 @@ function EditSchoolAdmission({ id }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formattedValues),
+          body: JSON.stringify(values),
         }
       );
 
@@ -91,7 +71,7 @@ function EditSchoolAdmission({ id }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
+    <div className="bg-white p-6 rounded-lg shadow-md px-10">
       <h2 className="text-center text-2xl font-bold mb-4 text-gray-800">
         Admission Details
       </h2>
@@ -102,91 +82,106 @@ function EditSchoolAdmission({ id }) {
         onSubmit={handleSubmit}
       >
         {(formik) => (
-          <Form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="openingDate" className="font-semibold block mb-1">
-                Admission Opening Dates:
-              </label>
-              <Field
-                type="date"
-                id="openingDate"
-                name="openingDate"
-                className="text-lg p-2 border border-gray-300 rounded-md w-full"
-              />
-              <ErrorMessage
-                name="openingDate"
-                component="div"
-                className="text-red-500"
-              />
-              <p>{initialData.openingDate}</p>
+          <Form>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="mb-4">
+                <label
+                  htmlFor="openingDate"
+                  className="font-semibold block mb-1"
+                >
+                  Admission Opening Dates:
+                </label>
+                <Field
+                  type="date"
+                  id="openingDate"
+                  name="openingDate"
+                  className="text-lg p-2 border border-gray-300 rounded-md w-full"
+                />
+                <ErrorMessage
+                  name="openingDate"
+                  component="div"
+                  className="text-red-500"
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="closingDate"
+                  className="font-semibold block mb-1"
+                >
+                  Admission Closing Dates:
+                </label>
+                <Field
+                  type="date"
+                  id="closingDate"
+                  name="closingDate"
+                  className="text-lg p-2 border border-gray-300 rounded-md w-full"
+                />
+                <ErrorMessage
+                  name="closingDate"
+                  component="div"
+                  className="text-red-500"
+                />
+              </div>
             </div>
-            <div>
-              <label htmlFor="closingDate" className="font-semibold block mb-1">
-                Admission Closing Dates:
-              </label>
-              <Field
-                type="date"
-                id="closingDate"
-                name="closingDate"
-                className="text-lg p-2 border border-gray-300 rounded-md w-full"
-              />
-              <ErrorMessage
-                name="closingDate"
-                component="div"
-                className="text-red-500"
-              />
+            <div className="grid grid-cols-1 gap-4 ">
+              <div className="grid grid-cols-1 pb-10 gap-10">
+                <div className="mb-4">
+                  <label htmlFor="process" className="font-semibold block mb-1">
+                    Admission Process:
+                  </label>
+                  <ReactQuill
+                    id="process"
+                    name="process"
+                    value={formik.values.process}
+                    onChange={formik.handleChange("process")}
+                  />
+                  <ErrorMessage
+                    name="process"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="criteria"
+                    className="font-semibold block mb-1"
+                  >
+                    Admission Criteria:
+                  </label>
+                  <ReactQuill
+                    id="criteria"
+                    name="criteria"
+                    value={formik.values.criteria}
+                    onChange={formik.handleChange("criteria")}
+                  />
+                  <ErrorMessage
+                    name="criteria"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="requiredDocuments"
+                    className="font-semibold block mb-1"
+                  >
+                    Documents Required:
+                  </label>
+                  <ReactQuill
+                    id="requiredDocuments"
+                    name="requiredDocuments"
+                    value={formik.values.requiredDocuments}
+                    onChange={formik.handleChange("requiredDocuments")}
+                  />
+                  <ErrorMessage
+                    name="requiredDocuments"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
+              </div>
             </div>
-            <div>
-              <label htmlFor="criteria" className="font-semibold block mb-1">
-                Admission Criteria:
-              </label>
-              <Field
-                as="textarea"
-                id="criteria"
-                name="criteria"
-                className="text-lg p-2 border border-gray-300 rounded-md w-full h-32"
-              />
-              <ErrorMessage
-                name="criteria"
-                component="div"
-                className="text-red-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="process" className="font-semibold block mb-1">
-                Admission Process:
-              </label>
-              <Field
-                as="textarea"
-                id="process"
-                name="process"
-                className="text-lg p-2 border border-gray-300 rounded-md w-full h-32"
-              />
-              <ErrorMessage
-                name="process"
-                component="div"
-                className="text-red-500"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="requiredDocuments"
-                className="font-semibold block mb-1"
-              >
-                Documents Required:
-              </label>
-              <Field
-                as="textarea"
-                id="requiredDocuments"
-                name="requiredDocuments"
-                className="text-lg p-2 border border-gray-300 rounded-md w-full h-32"
-              />
-              <ErrorMessage
-                name="requiredDocuments"
-                component="div"
-                className="text-red-500"
-              />
-            </div>
+
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded focus:outline-none focus:ring focus:ring-blue-200 col-span-2"
@@ -196,7 +191,6 @@ function EditSchoolAdmission({ id }) {
           </Form>
         )}
       </Formik>
-      )}
     </div>
   );
 }

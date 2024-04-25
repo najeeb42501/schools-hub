@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 function EditSchoolCurriculum({ id }) {
   const [courses, setCourses] = useState([
@@ -76,6 +78,7 @@ function EditSchoolCurriculum({ id }) {
       if (!response.ok) {
         throw new Error("Failed to save data");
       }
+      alert("Data Saved Successfully");
       console.log("Data saved successfully");
     } catch (error) {
       console.error("Error saving data:", error);
@@ -112,13 +115,12 @@ function EditSchoolCurriculum({ id }) {
             >
               Other Details:
             </label>
-            <textarea
-              id="otherDetails"
+
+            <ReactQuill
               value={otherDetails}
-              onChange={(e) => setOtherDetails(e.target.value)}
-              className="w-full h-32 border border-gray-300 rounded-md p-2"
+              onChange={setOtherDetails}
               placeholder="Add other necessary details about the curriculum..."
-            ></textarea>
+            />
           </div>
           <div className="text-center mt-4">
             <button

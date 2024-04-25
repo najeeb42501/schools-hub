@@ -66,13 +66,13 @@ function EditSchoolProfile() {
           >
             ADMISSION DETAILS
           </button>
-          <button
+          {/* <button
             className={buttonStyle("faculty")}
             onClick={(e) => setComponent(e.target.value)}
             value="faculty"
           >
             FACULTY
-          </button>
+          </button> */}
           <button
             className={buttonStyle("curriculum")}
             onClick={(e) => setComponent(e.target.value)}

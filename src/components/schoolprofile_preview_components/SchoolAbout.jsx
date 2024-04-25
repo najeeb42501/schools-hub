@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactQuill from "react-quill";
 
 function SchoolAbout({ schoolID }) {
   console.log("ABout SID: ", schoolID);
@@ -37,8 +38,12 @@ function SchoolAbout({ schoolID }) {
               About School
             </h2>
           </div>
-          <div className="p-10 text-sm md:text-lg">
-            <p>{schoolAboutData.aboutSchoolDescription}</p>
+          <div className="p-10 ">
+            <ReactQuill
+              value={schoolAboutData.aboutSchoolDescription}
+              readOnly={true}
+              theme={null}
+            />
           </div>
         </div>
       </div>

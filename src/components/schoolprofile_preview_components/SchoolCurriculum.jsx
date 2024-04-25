@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactQuill from "react-quill";
 
 function SchoolCurriculum({ data, schoolID }) {
   const [schoolCourseData, setSchoolCourseData] = useState({});
@@ -24,6 +25,7 @@ function SchoolCurriculum({ data, schoolID }) {
 
     fetchData(); // Call the function to fetch data
   }, []);
+
   return (
     <div className="text-center">
       <h1 className="text-3xl font-bold py-4">School Curriculum Details</h1>
@@ -57,7 +59,11 @@ function SchoolCurriculum({ data, schoolID }) {
             </h2>
           </div>
           <div className="p-8 space-y-4 text-left bg-gray-50">
-            <p>{schoolCourseData.otherDetails}</p>
+            <ReactQuill
+              value={schoolCourseData.otherDetails}
+              readOnly={true}
+              theme={null}
+            />
           </div>
         </div>
       </div>
