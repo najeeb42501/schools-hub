@@ -24,8 +24,8 @@ function SchoolContact({ schoolID }) {
   }, []);
 
   return (
-    <div className="bg-gray-100 p-6 rounded-md shadow-md">
-      <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 mb-10">
+    <div className="bg-gray-100 min-h-screen p-6 rounded-md shadow-md">
+      <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 p-10">
         School Contact Details:
       </h1>
       <div className="flex flex-col gap-10 justify-center items-center mx-auto">

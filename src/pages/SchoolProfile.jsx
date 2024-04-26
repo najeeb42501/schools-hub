@@ -93,70 +93,9 @@ function SchoolProfile() {
     "https://www.soe.edu.pk/images/albums/School%20of%20Excellence/img%20(4).JPG",
   ];
 
-  const schoolFacilities = [
-    {
-      name: "Library",
-      description:
-        "A well-stocked library with a wide range of books for all ages.",
-      availability:
-        "Specific class timing for reading class for students weekly.",
-    },
-    {
-      name: "Science Laboratory",
-      description:
-        "Fully equipped science laboratory for practical experiments.",
-      availability:
-        "Used for science classes and experiments under supervision.",
-    },
-    {
-      name: "Computer",
-      description:
-        "Personal computer with required software for student to learn how to use them for their purpose.",
-      availability: "Weeky classes ",
-    },
-    {
-      name: "Auditorium",
-      description:
-        "A spacious auditorium for school events, performances, and presentations.",
-      availability:
-        "Available for school events and activities upon reservation.",
-    },
-    {
-      name: "Shop",
-      description:
-        "A cafeteria providing healthy and hygienic meals for students and staff.",
-      availability: "Open during break times for snacks and lunch.",
-    },
-  ];
-
-  // Sample data for school activities (as an array of objects)
-  const schoolActivities = [
-    {
-      name: "Sport events",
-      description: "We organize sport event for student enjoyments",
-      schedule: "Most probably we do it yearly.",
-    },
-  ];
-
-  const schoolReviews = [
-    {
-      reviewerName: "Najeeb",
-      date: "November 15, 2023",
-      comment: "Great school with amazing facilities. My child loves it here!",
-      rating: 5,
-    },
-    {
-      reviewerName: "Qasim",
-      date: "October 20, 2023",
-      comment: "Good teachers and a supportive environment for students.",
-      rating: 4,
-    },
-    // Add more reviews as needed
-  ];
-
   const buttonStyle = (value) =>
-    `hover:bg-gray-600 text-white font-semibold p-4 w-full ${
-      component === value ? "bg-gray" : "bg-yellow"
+    `hover:bg-nightGreen text-white font-semibold p-4 w-full ${
+      component === value ? "bg-nightGreen" : "bg-cariGreen"
     }`;
 
   const renderComponent = () => {
@@ -174,17 +113,11 @@ function SchoolProfile() {
       case "gallery":
         return <SchoolGallery images={schoolImages} schoolID={schoolID} />;
       case "facilities":
-        return (
-          <SchoolFacilities
-            facilities={schoolFacilities}
-            activities={schoolActivities}
-            schoolID={schoolID}
-          />
-        );
+        return <SchoolFacilities schoolID={schoolID} />;
       case "contact":
         return <SchoolContact schoolID={schoolID} />;
       case "reviews":
-        return <SchoolReviews reviews={schoolReviews} />;
+        return <SchoolReviews />;
       default:
         return <SchoolOverview data={schoolOverviewData} schoolID={schoolID} />;
     }
@@ -201,7 +134,7 @@ function SchoolProfile() {
 
   return (
     <>
-      <div className="bg-gray-200">
+      <div className="bg-gray-100">
         {/* Cover and Profile Photo */}
         <div className="relative">
           <img
@@ -217,14 +150,14 @@ function SchoolProfile() {
             />
           </div>
         </div>
-        <div className="bg-gray-800">
+        <div className="bg-nightGreen">
           <h1 className="text-2xl pt-24 pb-4 md:text-5xl font-extrabold text-center text-white ">
             {schoolOverviewData.schoolName}
           </h1>
         </div>
         <div className="md:hidden fixed top-0 left-0 z-50">
           <button
-            className="p-4 bg-blue-500 text-white"
+            className="p-4 bg-cariGreen text-white"
             onClick={toggleSidebar}
           >
             Menu
@@ -234,10 +167,10 @@ function SchoolProfile() {
         <div className={`md:flex  md:items-start`}>
           {/* Updated Sidebar with dynamic classes for showing/hiding */}
           <div
-            className={`bg-gray-800 text-blue-100 w-64 space-y-6 py-7 px-2 fixed inset-y-0 left-0 transform ${
+            className={`bg-cariGreen text-blue-100 w-64 space-y-6 py-7 px-2 fixed inset-y-0 left-0 transform ${
               isMenuOpen ? "translate-x-0" : "-translate-x-full"
             } md:relative md:translate-x-0 transition-transform duration-300 ease-in-out z-40`}
-            style={{ height: "100vh" }}
+            style={{ height: "" }}
           >
             {/* Navigation Buttons... */}
             <button

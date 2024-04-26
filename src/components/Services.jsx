@@ -10,8 +10,8 @@ import {
 function Services() {
   return (
     <div className="w-full ">
-      <h1 className="text-5xl font-bold  font-sans bg-yellow  "> </h1>
-      <h1 className="text-5xl text-center py-20 bg-yellow font-extrabold text-yellow-500 hover:text-yellow-400 transition-colors duration-300 ease-in-out shadow-lg hover:shadow-xl transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+      <h1 className="text-5xl font-bold  font-sans bg-nightGreen  "> </h1>
+      <h1 className="text-5xl text-center py-20 text-cariGreen bg-nightGreen font-extrabold text-nightGreen-500 hover:text-nightGreen-400 transition-colors duration-300 ease-in-out shadow-lg hover:shadow-xl transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
         Choose Ideal Schools For Your Child
       </h1>
 
@@ -21,7 +21,7 @@ function Services() {
             icon={faChalkboard}
             className=" sm:text-8xl text-5xl "
           />
-          <h1 className="text-xl font-bold text-yellow ">
+          <h1 className="text-xl font-bold text-nightGreen ">
             Comprehensive <br />
             Schools Profile
           </h1>
@@ -32,7 +32,7 @@ function Services() {
         </div>
         <div className="flex flex-col gap-3  shadow-inner bg-gray-200 p-8  ">
           <FontAwesomeIcon icon={faRobot} className=" sm:text-8xl text-5xl " />
-          <h1 className="text-xl font-bold  text-yellow ">
+          <h1 className="text-xl font-bold  text-nightGreen ">
             Ask-AI
             <br />
             Child Guidance
@@ -47,7 +47,7 @@ function Services() {
             icon={faStarHalfStroke}
             className=" sm:text-8xl text-5xl "
           />
-          <h1 className="text-xl font-bold text-yellow ">
+          <h1 className="text-xl font-bold text-nightGreen ">
             Public Feedback <br /> & Reviews
           </h1>
           <p>
@@ -60,7 +60,7 @@ function Services() {
             icon={faShieldHalved}
             className=" sm:text-8xl text-5xl "
           />
-          <h1 className="text-xl font-bold text-yellow  ">
+          <h1 className="text-xl font-bold text-nightGreen  ">
             Read Blogs <br /> Engage With Others
           </h1>
           <p>

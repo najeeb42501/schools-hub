@@ -27,8 +27,8 @@ function SchoolAbout({ schoolID }) {
 
   return (
     <div className="px-4 py-10  min-h-screen bg-gray-100">
-      <h1 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-10">
-        About School Details:
+      <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 p-10">
+        About School
       </h1>
       <div className="flex flex-col gap-10 justify-center items-center mx-auto">
         {/* First Card */}

@@ -26,73 +26,74 @@ function SchoolAdmission({ schoolID }) {
     fetchData(); // Call the function to fetch data
   }, []);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { month: "long", day: "numeric", year: "numeric" };
+    const formattedDate = date.toLocaleDateString("en-US", options);
+    return formattedDate;
+  };
+
+  const openingDate = formatDate(schoolAdmissionData.openingDate);
+  const closingDate = formatDate(schoolAdmissionData.closingDate);
+
   return (
-    <div className=" py-10 px-4 min-h-screen bg-gray-100 rounded-lg shadow-md">
+    <div className="py-10 px-4 min-h-screen bg-gray-100 rounded-lg shadow-md">
       <h2 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 mb-10">
         Admission Details
       </h2>
       <div className="flex flex-col gap-10 justify-center items-center mx-auto">
-        <div className="w-full md:w-3/4 xl:w-2/3  bg-white rounded-lg shadow-xl overflow-hidden">
-          <div className="bg-yellow p-8">
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-nightGreen p-4">
             <h2 className="text-3xl font-extrabold text-center text-white mb-4">
               Admission Dates
             </h2>
           </div>
-          <div className="flex flex-row p-8 gap-6 justify-around bg-gray-50">
-            <p>
-              Opening Date :
-              <span className="text-xl ">
-                {schoolAdmissionData.openingDate}
-              </span>
+          <div className="flex flex-row p-4 text-lg gap-6 justify-around bg-gray-50">
+            <p className="">
+              Opening Date :<span className=" pl-4 text-xl">{openingDate}</span>
             </p>
-            <p>
-              Closing Date :
-              <span className="text-xl ">
-                {schoolAdmissionData.openingDate}
-              </span>
+            <p className="">
+              Closing Date :<span className="pl-4 text-xl">{closingDate}</span>
             </p>
           </div>
         </div>
-        <div className="w-full md:w-3/4 xl:w-2/3  bg-white rounded-lg shadow-xl overflow-hidden">
-          <div className="bg-yellow p-8">
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-nightGreen p-4">
             <h2 className="text-3xl font-extrabold text-center text-white mb-4">
               Admission Process
             </h2>
           </div>
-          <div className="flex flex-row p-8 gap-6  font-normal bg-gray-50">
-            <p>{}</p>
+          <div className="flex flex-row text-lg p-4 gap-6  bg-gray-50 ">
             <ReactQuill
-              value={schoolAdmissionData.process}
+              value={schoolAdmissionData.process || ""}
               readOnly={true}
               theme={null}
             />
           </div>
         </div>
-
-        <div className="w-full md:w-3/4 xl:w-2/3  bg-white rounded-lg shadow-xl overflow-hidden">
-          <div className="bg-yellow p-8">
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-nightGreen p-4">
             <h2 className="text-3xl font-extrabold text-center text-white mb-4">
               Admission Criteria
             </h2>
           </div>
-          <div className="flex flex-row p-8 gap-6 font-normal bg-gray-50">
+          <div className="flex flex-row p-4 gap-6 text-lg bg-gray-50">
             <ReactQuill
-              value={schoolAdmissionData.criteria}
+              value={schoolAdmissionData.criteria || ""}
               readOnly={true}
               theme={null}
             />
           </div>
         </div>
-
-        <div className="w-full md:w-3/4 xl:w-2/3  bg-white rounded-lg shadow-xl overflow-hidden">
-          <div className="bg-yellow p-8">
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-nightGreen p-4">
             <h2 className="text-3xl font-extrabold text-center text-white mb-4">
               Required Documents
             </h2>
           </div>
-          <div className="flex flex-row p-8 gap-6 font-normal bg-gray-50">
+          <div className="flex flex-row p-4 gap-6 text-lg bg-gray-50">
             <ReactQuill
-              value={schoolAdmissionData.requiredDocuments}
+              value={schoolAdmissionData.requiredDocuments || ""}
               readOnly={true}
               theme={null}
             />

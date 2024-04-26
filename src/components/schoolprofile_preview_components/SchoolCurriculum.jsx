@@ -27,38 +27,34 @@ function SchoolCurriculum({ data, schoolID }) {
   }, []);
 
   return (
-    <div className="text-center">
-      <h1 className="text-3xl font-bold py-4">School Curriculum Details</h1>
+    <div className="text-center bg-gray-100 min-h-screen">
+      <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 p-10">
+        School Currilum Details
+      </h1>
       <div className="flex flex-col gap-10 justify-center items-center mx-auto">
         {/* First Card */}
         <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
-          <div className="bg-yellow p-8">
+          <div className="bg-nightGreen  p-4">
             <h2 className="text-3xl font-extrabold text-white mb-4">
               Curriculum Followed:
             </h2>
           </div>
-          <ul className="p-8 space-y-4 text-left bg-gray-50">
+          <ul className=" p-10 space-y-4 text-left bg-gray-50">
             {schoolCourseData.courses &&
               schoolCourseData.courses.map((course) => {
-                return (
-                  <li className="text-xl">
-                    {" "}
-                    <span> >>> </span>
-                    {course}
-                  </li>
-                );
+                return <li className="text-xl"> ⦿ {course}</li>;
               })}
           </ul>
         </div>
 
         {/* Second Card */}
-        <div className="w-full md:w-3/4 xl:w-2/3 bg-yellow rounded-lg shadow-xl overflow-hidden">
-          <div className="bg-red-600 p-8">
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-nightGreen rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-nightGreen  p-4">
             <h2 className="text-3xl font-bold text-white mb-4">
               Other Details:
             </h2>
           </div>
-          <div className="p-8 space-y-4 text-left bg-gray-50">
+          <div className=" p-4 space-y-4 text-left bg-gray-50">
             <ReactQuill
               value={schoolCourseData.otherDetails}
               readOnly={true}

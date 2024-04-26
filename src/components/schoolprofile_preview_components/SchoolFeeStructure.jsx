@@ -23,19 +23,19 @@ function SchoolFeeStructure({ data, schoolID }) {
     fetchData(); // Call the function to fetch data
   }, []);
   return (
-    <div className="overflow-x-auto text-center ">
-      <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 mb-10">
-        School Fee Structure Details
+    <div className="overflow-x-auto min-h-screen bg-gray-100 text-center ">
+      <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 p-10">
+        School Fee Details
       </h1>
       <div className="flex flex-col gap-10 justify-center items-center mx-auto">
         {/* Card */}
         <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
           <div className="bg-yellow p-8">
             <h2 className="text-3xl font-extrabold text-white mb-4">
-              School Details
+              Fee Structure
             </h2>
           </div>
-          <div className="px-10">
+          <div className="p-10">
             <table className="table table-zebra ">
               <thead>
                 <tr className="font-bold text-lg">

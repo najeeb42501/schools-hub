@@ -91,7 +91,10 @@ function SchoolReviews() {
   };
 
   return (
-    <Container>
+    <Container className="bg-gray-100 py-10 px-4">
+      <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 mb-10">
+        School Reviews
+      </h1>
       {userType === "user" && (
         <Box className="mt-4">
           <Grid container spacing={2}>
@@ -141,7 +144,7 @@ function SchoolReviews() {
       <Box className="mt-4">
         <Typography variant="h4">Previous Reviews</Typography>
         {reviewsData.map((review, index) => (
-          <Box key={index} className="mt-2 p-2 border border-gray-300 rounded">
+          <Box key={index} className="mt-2 p-4 border border-gray-300 rounded">
             <Grid container spacing={2}>
               <Grid item xs={2}>
                 <Avatar />
