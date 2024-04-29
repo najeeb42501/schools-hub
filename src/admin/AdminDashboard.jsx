@@ -5,6 +5,7 @@ import Overview from "./Overview"; // Import the default Overview component
 import Users from "./Users"; // Import the Users component
 import Schools from "./Schools"; // Import the Schools component
 import Settings from "./Settings"; // Import the Settings component
+import AddBlogs from "./AddBlogs";
 
 function AdminDashboard() {
   // State to manage the currently selected menu item
@@ -45,10 +46,10 @@ function AdminDashboard() {
         return <Overview registeredUsers={users} />;
       case "Users":
         return <Users />;
-      case "Schools":
+      case "Schools ;;":
         return <Schools />;
-      case "Settings":
-        return <Settings />;
+      case "Add Blogs":
+        return <AddBlogs />;
       default:
         return <Overview />;
     }

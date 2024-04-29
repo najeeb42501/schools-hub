@@ -13,6 +13,7 @@ import {
 
 function Overview({ registeredUsers }) {
   // Sample data for the chart (replace with actual data)
+  console.log(registeredUsers.totalUsers);
   const data = [
     { month: "Jan", users: 400, schools: 240 },
     { month: "Feb", users: 300, schools: 139 },
