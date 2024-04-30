@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Main() {
   return (
@@ -22,9 +23,12 @@ function Main() {
           insightful reviews, School-Hub empowers parents to make well-informed
           decisions, ensuring a brighter future for their children.
         </p>
-        <button className="btn bg-cariGreen text-white hover:bg-nightGreen px-6 md:px-8 py-2 mt-4">
+        <Link
+          to="/schools"
+          className="btn bg-cariGreen text-white hover:bg-nightGreen px-6 md:px-8 py-2 mt-4"
+        >
           Explore
-        </button>
+        </Link>
       </div>
     </section>
   );

@@ -48,19 +48,19 @@ function Users() {
   );
 
   return (
-    <div className="p-4">
+    <div className="p-10">
       {/* Search input */}
       <div className="w-full">
         <input
           type="text"
-          placeholder="Search by email"
+          placeholder="Search users by email"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border w-full border-gray-300 p-2 rounded mb-4 "
+          className="border w-1/2 border-gray-300 p-2 rounded mb-4 "
         />
       </div>
 
-      <hr className="my-4 border-gray-300" />
+      <hr className="my-10 border-2 border-gray-300" />
 
       {/* Table of users */}
       <div className="overflow-x-auto">
@@ -87,10 +87,10 @@ function Users() {
                 <td className="px-4 py-2 border border-gray-300">
                   {user.password}
                 </td>
-                <td className="px-4 py-2 border border-gray-300">
+                <td className="px-4 py-2 border text-center border-gray-300">
                   <button
                     onClick={() => handleDelete(user._id)}
-                    className="btn btn-secondary"
+                    className="btn bg-cariGreen hover:bg-nightGreen  text-white w-1/2 "
                   >
                     Delete
                   </button>

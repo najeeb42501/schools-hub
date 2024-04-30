@@ -97,7 +97,7 @@ function Navbar() {
                 to="/login"
                 className="btn btn-outline text-white hover:bg-nightGreen"
               >
-                Log In
+                Sign In
               </Link>
               <Link
                 to="/signup"

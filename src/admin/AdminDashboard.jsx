@@ -21,7 +21,7 @@ function AdminDashboard() {
       }
 
       const data = await response.json();
-      console.log("DATA:", data);
+      console.log("DATA :", data);
 
       setUsers(data);
     } catch (error) {
@@ -46,7 +46,7 @@ function AdminDashboard() {
         return <Overview registeredUsers={users} />;
       case "Users":
         return <Users />;
-      case "Schools ;;":
+      case "Schools":
         return <Schools />;
       case "Add Blogs":
         return <AddBlogs />;
@@ -56,12 +56,9 @@ function AdminDashboard() {
   };
 
   return (
-    <div className="grid grid-cols-12 gap-4 h-screen">
+    <div className="grid grid-cols-12 gap-4 max-h-full min-h-screen  ">
       <Sidebar onMenuItemClick={handleMenuItemClick} />
-      <div className="col-span-9 bg-white p-4">
-        <h1 className="text-2xl font-semibold mb-4">Admin Dashboard</h1>
-        {renderComponent()}
-      </div>
+      <div className="col-span-10 bg-white p-4">{renderComponent()}</div>
     </div>
   );
 }

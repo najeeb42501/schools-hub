@@ -94,7 +94,7 @@ function Schools() {
   );
 
   return (
-    <div className="p-4">
+    <div className="p-10">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -169,10 +169,10 @@ function Schools() {
           </div>
           <button
             type="submit"
-            className="rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-indigo-600 text-indigo-600 text-white mt-4 "
+            className="rounded-md px-3.5 py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-nightGreen text-cariGreen mt-4 "
           >
-            <span class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-indigo-600 top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
-            <span class="relative text-indigo-600 transition duration-300 group-hover:text-white ease">
+            <span class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-cariGreen top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
+            <span class="relative text-cariGreen transition duration-300 group-hover:text-white ease">
               Create School Profile
             </span>
           </button>
@@ -187,7 +187,7 @@ function Schools() {
           placeholder="Search by School Name"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border border-gray-300 p-2 rounded mb-4"
+          className="border-2 border-nightGreen   w-1/2 p-2 rounded mb-4"
         />
       </div>
 
@@ -195,7 +195,7 @@ function Schools() {
       <div className="overflow-y-auto max-h-96">
         <table className="table table-zebra">
           <thead>
-            <tr>
+            <tr className="text-lg text-black">
               <th className="px-4 py-2">School Name</th>
               <th className="px-4 py-2">Email</th>
               <th className="px-4 py-2">Password</th>
@@ -213,7 +213,7 @@ function Schools() {
                 <td className="border px-4 py-2">
                   <button
                     onClick={() => handleDelete(school._id)}
-                    className="btn btn-warning"
+                    className="btn bg-cariGreen hover:bg-nightGreen text-white"
                   >
                     Delete
                   </button>

@@ -1,8 +1,7 @@
-// Overview.js
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -11,65 +10,123 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+const formatXAxis = (value) => {
+  return months[value - 1]; // Adjust value to index
+};
+
 function Overview({ registeredUsers }) {
-  // Sample data for the chart (replace with actual data)
-  console.log(registeredUsers.totalUsers);
-  const data = [
-    { month: "Jan", users: 400, schools: 240 },
-    { month: "Feb", users: 300, schools: 139 },
-    { month: "Mar", users: 200, schools: 980 },
-    { month: "Apr", users: 278, schools: 390 },
-    { month: "May", users: 189, schools: 480 },
-    { month: "Jun", users: 239, schools: 380 },
-    { month: "Jul", users: 349, schools: 430 },
-    { month: "Aug", users: 200, schools: 490 },
-    { month: "Sep", users: 278, schools: 390 },
-    { month: "Oct", users: 189, schools: 480 },
-    { month: "Nov", users: 239, schools: 380 },
-    { month: "Dec", users: 349, schools: 430 },
-  ];
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/admin/all-users");
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const allUsers = await response.json();
+
+      // Initialize counts for users and schools for each month
+      const counts = Array.from({ length: 12 }, (_, index) => ({
+        month: (index + 1).toString(), // January is 1, December is 12
+        users: 0,
+        schools: 0,
+      }));
+
+      // Loop through each user to count the users and schools for each month
+      allUsers.forEach((user) => {
+        const createdAt = new Date(user.createdAt);
+        const monthIndex = createdAt.getMonth();
+        if (user.type === "user") {
+          counts[monthIndex].users++;
+        } else if (user.type === "school") {
+          counts[monthIndex].schools++;
+        }
+      });
+
+      // Update the state with the counts data
+      setData(counts);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // Separate data for schools and users
+  const schoolsData = data.map(({ month, schools }) => ({ month, schools }));
+  const usersData = data.map(({ month, users }) => ({ month, users }));
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
       {/* First row with two cards */}
-      <div className="card p-4 bg-white shadow-lg rounded-lg">
+      <div className="card p-10 bg-cariGreen text-white shadow-lg rounded-lg">
         <h2 className="text-xl font-semibold mb-2">Total Users</h2>
-        <p className="text-3xl font-bold">{registeredUsers.totalUsers}</p>
+        <hr className="border-1 border-gray-100 w-full rounded-full  my-2" />
+        <p className="text-5xl font-bold">{registeredUsers.totalUsers}</p>
       </div>
 
-      <div className="card p-4 bg-white shadow-lg rounded-lg">
+      <div className="card p-10 bg-cariGreen text-white shadow-lg rounded-lg">
         <h2 className="text-xl font-semibold mb-2">Total Schools</h2>
-        <p className="text-3xl font-bold">{registeredUsers.totalSchools}</p>
+        <hr className="border-1 border-gray-100 w-full rounded-full  my-2" />
+        <p className="text-5xl font-bold">{registeredUsers.totalSchools}</p>
       </div>
 
-      {/* Second row with the chart */}
-      <div className="card p-4 bg-white shadow-lg rounded-lg col-span-2 sm:col-span-1">
-        <h2 className="text-xl font-semibold mb-2">
-          Registrations Over Previous Months
+      <div className="card p-4 bg-gray-100 shadow-lg rounded-lg ">
+        <h2 className="text-2xl text-center font-semibold mb-2">
+          Users Registrations Over Previous Months
         </h2>
+        <hr className="border-1 border-gray-500 w-full rounded-full  my-5" />
+
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart
-            data={data}
-            margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+          <BarChart
+            data={usersData}
+            margin={{ top: 5, right: 20, left: 10, bottom: 20 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
+            <XAxis dataKey="month" tickFormatter={formatXAxis} />
+            <YAxis domain={[0, "dataMax + 5"]} />
             <Tooltip />
             <Legend />
-            <Line
-              type="monotone"
-              dataKey="users"
-              stroke="#10b981"
-              strokeWidth={2}
-            />
-            <Line
-              type="monotone"
-              dataKey="schools"
-              stroke="#3b82f6"
-              strokeWidth={2}
-            />
-          </LineChart>
+            <Bar dataKey="users" fill="#10b981" name="Users" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="card p-4 bg-gray-100  shadow-lg rounded-lg ">
+        <h2 className="text-2xl text-center font-semibold mb-2">
+          Schools Registrations Over Previous Months
+        </h2>
+        <hr className="border-1 border-gray-500 w-full rounded-full  my-5" />
+
+        <ResponsiveContainer width="100%" height={300}>
+          {/* Bar chart for schools */}
+          <BarChart
+            data={schoolsData}
+            margin={{ top: 5, right: 20, left: 10, bottom: 20 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" tickFormatter={formatXAxis} />
+            <YAxis domain={[0, "dataMax + 5"]} />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="schools" fill="#3b82f6" name="Schools" />
+          </BarChart>
         </ResponsiveContainer>
       </div>
     </div>

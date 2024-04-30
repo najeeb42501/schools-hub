@@ -3,11 +3,11 @@ import React from "react";
 function AboutPage() {
   return (
     <div className="w-full h-full">
-      <div className="w-full h-[10rem] bg-yellow">
+      <div className="w-full h-[10rem] bg-gray-100">
         <h1 className="text-5xl text-center font-bold font-mono pt-10">
           About Us
         </h1>
-        <h1 className="text-center text-white text-3xl">
+        <h1 className="text-center text-cariGreen text-3xl">
           Connecting Parents to Educational Possibilities With School-Hub
         </h1>
       </div>

@@ -5,9 +5,9 @@ import * as Yup from "yup";
 import axios from "axios";
 
 const schoolLevels = ["Primary", "Secondary", "High School"];
-const schoolSystems = ["Public", "Private"];
+const schoolSystems = ["Matriculation", "O-Level"];
 const schoolTypes = ["Co-education", "Boys", "Girls"];
-const schoolMediums = ["English", "Urdu", "Local Language"];
+const schoolMediums = ["English", "Urdu", "Sindi"];
 const accreditationsOptions = ["Accredited", "Not Accredited"];
 
 const validationSchema = Yup.object({

@@ -6,7 +6,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 function Sidebar({ onMenuItemClick }) {
   // Mock data for the logged-in user
   const user = {
-    name: "John Doe",
+    name: "Admin",
     // imageUrl: "https://example.com/user.jpg", // Replace with actual user image URL
   };
 
@@ -16,51 +16,51 @@ function Sidebar({ onMenuItemClick }) {
   };
 
   return (
-    <aside className="col-span-2 bg-gray-900 text-gray-100 p-4">
+    <aside className="col-span-2 bg-nightGreen text-gray-100 ">
       {/* Logged-in user section */}
-      <div className="flex items-center mb-8">
+      <div className="flex items-center mb-4 p-4">
         {/* User icon */}
         <div className="rounded-full bg-gray-800 p-2 mr-3">
           <FontAwesomeIcon icon={faUser} className="text-gray-400" />
         </div>
         {/* User name */}
-        <span className="text-lg font-semibold">{user.name}</span>
+        <span className="text-2xl font-semibold">{user.name}</span>
       </div>
+
+      <hr className="border-gray-100 border-2 w-full my-4" />
 
       {/* Sidebar menu */}
-      <div>
-        <h2 className="text-lg font-semibold mb-4">Menu</h2>
-        <ul>
+      <div className="text-md text-left ">
+        <h2 className="text-lg text-center font-semibold mb-4">MENU</h2>
+
+        <ul className="ml-4">
           <li
-            className="mb-2 hover:text-blue-400"
+            className="mb-5 hover:text-cariGreen cursor-pointer "
             onClick={() => handleMenuClick("Overview")}
           >
-            Overview
+            OVERVIEW
           </li>
+
           <li
-            className="mb-2 hover:text-blue-400"
+            className="mb-5 hover:text-cariGreen cursor-pointer"
             onClick={() => handleMenuClick("Schools")}
           >
-            Schools
+            SCHOOLS PANEL
           </li>
           <li
-            className="mb-2 hover:text-blue-400"
+            className="mb-5 hover:text-cariGreen cursor-pointer"
             onClick={() => handleMenuClick("Users")}
           >
-            Users
+            USERS PANEL
           </li>
           <li
-            className="mb-2 hover:text-blue-400"
-            onClick={() => handleMenuClick("Settings")}
+            className="mb-5 hover:text-cariGreen cursor-pointer"
+            onClick={() => handleMenuClick("Add Blogs")}
           >
-            Settings
+            MANAGE BLOGS
           </li>
-          <li className="mb-2 hover:text-blue-400">Logout</li>
         </ul>
       </div>
-
-      {/* Attractive and engaging bar */}
-      <div className="bg-blue-500 h-1 mt-8"></div>
     </aside>
   );
 }

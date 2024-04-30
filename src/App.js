@@ -14,6 +14,7 @@ import AdminDashboard from "./admin/AdminDashboard";
 import AIComponent from "./ai/AIComponent";
 import { AdminElement, SchoolElement, UserElement } from "./routes/Routes";
 import { useAppContext } from "./state/ContextAPI";
+import BlogPost from "./pages/BlogPost";
 
 function App() {
   const { state } = useAppContext();
@@ -29,6 +30,7 @@ function App() {
         <Route path="/schoolprofile/:schoolID" element={<SchoolProfile />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/blogs" element={<BlogPage />} />
+        <Route path="/blogs/:blogID" element={<BlogPost />} />
         <Route path="/" exact element={<HomePage />} />
         <Route
           path="/admin"

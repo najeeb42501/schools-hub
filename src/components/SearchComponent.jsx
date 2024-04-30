@@ -30,14 +30,7 @@ function SearchComponent({ onSearch }) {
             />
           </div>
         </div>
-        <select className="select select-bordered join-item">
-          <option disabled selected>
-            Filter
-          </option>
-          <option>City</option>
-          <option>Town</option>
-          <option>Type</option>
-        </select>
+
         <div className="indicator">
           <button
             className="btn join-item hover:bg-yellow"

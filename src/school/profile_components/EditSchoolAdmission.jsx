@@ -71,7 +71,7 @@ function EditSchoolAdmission({ id }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md px-10">
+    <div className="bg-white p-6 rounded-lg min-h-screen shadow-md px-10">
       <h2 className="text-center text-2xl font-bold mb-4 text-gray-800">
         Admission Details
       </h2>

@@ -35,18 +35,18 @@ function SimpleAIComponent() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4 py-10">
       <div className="w-full md:w-2/3 p-8  text-center  bg-white rounded-lg shadow-md">
-        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">
+        <h2 className="text-5xl font-semibold text-center text-nightGreen mb-6">
           Ask AI
         </h2>
-        <h2 className="text-2xl font-bold text-center text-yellow mb-6">
+        <h2 className="text-2xl font-bold text-center text-cariGreen mb-6">
           Make Your Child Future Bright
         </h2>
         <div className="mb-6 w-full">
           <label
             htmlFor="prompt"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-lg font-medium text-gray-700 mb-2"
           >
-            Your Prompt
+            Enter Your Prompt
           </label>
           <textarea
             id="prompt"
@@ -61,22 +61,22 @@ function SimpleAIComponent() {
         <button
           onClick={handleSubmit}
           className={`w-1/4 text-white px-4 py-2 rounded-md transition duration-150 ease-in-out ${
-            loading ? "bg-gray-400" : "bg-gray-800 hover:bg-yellow"
+            loading ? "bg-gray-400" : "bg-cariGreen hover:bg-nightGreen"
           } focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50`}
           disabled={loading}
         >
-          {loading ? "Loading..." : "Submit"}
+          {loading ? "Loading..." : "Generate Response"}
         </button>
       </div>
-      <div className="w-full md:w-2/3 p-8 bg-gray-200 rounded-lg shadow-md mt-6">
-        <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">
+      <div className="w-full md:w-2/3 p-8 bg-cariGreen rounded-lg shadow-md mt-6">
+        <h1 className="text-3xl font-semibold text-center text-white  mb-6">
           {" "}
           Model Response:
         </h1>
         <textarea
           value={response.content || ""}
           readOnly
-          className="w-full h-64 resize-none rounded-md border border-gray-300 p-3 text-gray-700"
+          className="w-full h-64 resize-none rounded-md  border-nightGreen border-2 p-3 text-gray-700"
           placeholder="AI's Response"
         />
       </div>
