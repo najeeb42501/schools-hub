@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import SearchComponent from "../components/SearchComponent";
 import SchoolsList from "../components/SchoolsList";
 import AdvanceFilters from "../components/AdvanceFilters";
-import CurrentLocationFilter from "../components/CurrentLocationFilter";
+import AdvancedSearchUsingLocation from "../components/AdvancedSearchUsingLocation";
+
 import { useAppContext } from "../state/ContextAPI";
 
 function SchoolsPage() {
@@ -19,6 +20,8 @@ function SchoolsPage() {
     selectedCurriculum: "",
     selectedFeeRange: "",
   });
+
+  const [userLocation, setUserLocation] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +44,40 @@ function SchoolsPage() {
   }, [state]);
 
   console.log("Sate Schools :", allSchools);
+
+  const handleSetUserLocation = (location) => {
+    setUserLocation(location);
+    console.log("User Location Set:", location);
+  };
+
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Radius of the Earth in km
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Distance in km
+  };
+
+  const handleSearchNearbySchools = (userLoc) => {
+    const nearbySchools = allSchools.filter((school) => {
+      if (!school.latitude || !school.longitude) return false;
+      const distance = calculateDistance(
+        userLoc.latitude,
+        userLoc.longitude,
+        school.latitude,
+        school.longitude
+      );
+      return distance <= 20;
+    });
+    setAllSchools(nearbySchools);
+    console.log("Nearby Schools:", nearbySchools);
+  };
 
   // Function to update filters state
   const handleFilterChange = (newFilters) => {
@@ -82,13 +119,48 @@ function SchoolsPage() {
     filters
   );
 
+  const resetFilters = async () => {
+    // Reset local filter states
+    setFilters({
+      selectedCity: "",
+      selectedSchoolLevel: "",
+      selectedSchoolType: "",
+      selectedSchoolSize: "",
+      selectedSchoolMedium: "",
+      selectedCurriculum: "",
+      selectedFeeRange: "",
+    });
+    setSearchSchoolByName(null);
+    setUserLocation(null);
+
+    // Fetch all schools again or set to original fetched data if cached
+    try {
+      const response = await fetch(
+        "http://localhost:5000/getAllSchools/allSchools"
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch schools data");
+      }
+      const data = await response.json();
+      setAllSchools(data);
+    } catch (error) {
+      console.error("Error refetching schools data:", error);
+    }
+  };
+
   return (
     <>
       <SearchComponent onSearch={handleSearch} />
       {state.type !== "guest" ? (
         <>
-          {/* <CurrentLocationFilter /> */}
-          <AdvanceFilters onFilterChange={handleFilterChange} />
+          <AdvancedSearchUsingLocation
+            onSetUserLocation={handleSetUserLocation}
+            onSearchNearby={handleSearchNearbySchools}
+          />
+          <AdvanceFilters
+            onFilterChange={handleFilterChange}
+            onResetFilter={resetFilters}
+          />
         </>
       ) : null}
       <SchoolsList schools={filteredSchools} />

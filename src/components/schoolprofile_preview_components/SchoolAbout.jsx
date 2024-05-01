@@ -32,7 +32,7 @@ function SchoolAbout({ schoolID }) {
       </h1>
       <div className="flex flex-col gap-10 justify-center items-center mx-auto">
         {/* First Card */}
-        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white school-details-card rounded-lg shadow-xl overflow-hidden">
           <div className="bg-yellow p-8">
             <h2 className="text-3xl font-extrabold text-white mb-4">
               About School

@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from "react";
-import mapboxgl from "mapbox-gl";
-import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { FaPhone, FaEnvelope, FaGlobe, FaMapMarkerAlt } from "react-icons/fa";
 
+const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+
 function SchoolContact({ schoolID }) {
-  const [schoolContactData, setSchoolContactData] = useState({});
+  const [schoolContactData, setSchoolContactData] = useState({
+    latitude: null,
+    longitude: null,
+    schoolAddress: "",
+    schoolEmail: "",
+    schoolMobileNo: "",
+    schoolWebsite: "",
+  });
   const [showMap, setShowMap] = useState(false);
+
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: apiKey,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,129 +29,109 @@ function SchoolContact({ schoolID }) {
           throw new Error("Failed to fetch schools data");
         }
         const data = await response.json();
-
         console.log("Schools : ", data);
-        setSchoolContactData(data); // Store the fetched data in state
+        setSchoolContactData(data);
       } catch (error) {
         console.error("Error fetching schools data:", error);
       }
     };
 
-    fetchData(); // Call the function to fetch data
-  }, []);
+    fetchData();
+  }, [schoolID]);
 
-  useEffect(() => {
-    if (showMap && schoolContactData.schoolAddress) {
-      const map = new mapboxgl.Map({
-        container: "map",
-        style: "mapbox://styles/mapbox/streets-v11",
-        center: [0, 0],
-        zoom: 1,
-      });
+  const containerStyle = {
+    width: "400px",
+    height: "400px",
+  };
 
-      map.on("load", () => {
-        const geocoder = new MapboxGeocoder({
-          accessToken: mapboxgl.accessToken,
-          mapboxgl: mapboxgl,
-        });
-
-        map.addControl(geocoder);
-
-        geocoder.on("result", (e) => {
-          const { coordinates } = e.result.geometry;
-          const center = coordinates.slice(); // Ensure it's a copy
-          map.flyTo({ center, zoom: 15 });
-          new mapboxgl.Marker().setLngLat(center).addTo(map);
-        });
-
-        geocoder.query(schoolContactData.schoolAddress);
-      });
-
-      const closeMap = () => {
-        setShowMap(false);
-        map.remove();
-      };
-
-      const mapContainer = document.getElementById("map-container");
-      mapContainer.addEventListener("click", closeMap);
-
-      return () => {
-        mapContainer.removeEventListener("click", closeMap);
-      };
-    }
-  }, [showMap, schoolContactData.schoolAddress]);
+  if (loadError) return <div>Error loading maps</div>;
+  if (!isLoaded) return <div>Loading Maps...</div>;
 
   return (
     <div className="bg-gray-100 min-h-screen p-6 rounded-md shadow-md">
       <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 p-10">
-        School Contact Details:
+        School Contact Details
       </h1>
       <div className="flex flex-col gap-10 justify-center items-center mx-auto">
-        {/* First Card */}
-        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
-          <div className="bg-yellow p-8">
-            <h2 className="text-3xl font-extrabold text-white mb-4">
-              Contact Details
-            </h2>
-          </div>
-          <div className="flex flex-col space-y-4 p-10 font-mono">
-            <div className="flex items-center">
-              <FaPhone className="text-cariGreen  mr-9 " size={40} />
-              <p>
-                <span className="font-semibold">
-                  {schoolContactData.schoolMobileNo}
-                </span>
-              </p>
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white school-details-card rounded-lg shadow-xl overflow-hidden">
+          <div className=" ">
+            <div className="bg-nightGreen p-4">
+              <h2 className="text-3xl font-extrabold text-center text-white mb-4">
+                Contact Details
+              </h2>
             </div>
-            <div className="flex items-center">
-              <FaEnvelope className="text-cariGreen  mr-9 " size={40} />
-              <p>
-                <span className="font-semibold">
-                  {schoolContactData.schoolEmail}
-                </span>
-              </p>
+            <div className="flex flex-col space-y-4 p-2 font-mono">
+              <div className="flex flex-col space-y-2 p-10 pb-5 font-mono">
+                {/* Phone number */}
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <FaPhone className="text-cariGreen" size={32} />
+                  <p className="text-lg text-gray-800">
+                    {schoolContactData.schoolMobileNo}
+                  </p>
+                </div>
+
+                {/* Email address */}
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <FaEnvelope className="text-cariGreen" size={32} />
+                  <p className="text-lg text-gray-800">
+                    {schoolContactData.schoolEmail}
+                  </p>
+                </div>
+
+                {/* Website URL */}
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <FaGlobe className="text-cariGreen" size={32} />
+                  <p className="text-lg text-gray-800">
+                    {schoolContactData.schoolWebsite}
+                  </p>
+                </div>
+
+                {/* Physical address */}
+                <div className="flex items-center space-x-4 bg-gray-50 p-3 rounded-lg">
+                  <FaMapMarkerAlt className="text-cariGreen" size={32} />
+                  <p className="text-lg text-gray-800">
+                    {schoolContactData.schoolAddress}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setShowMap(true)}
+                className="bg-cariGreen hover:bg-nightGreen text-white w-1/3 mx-auto font-bold py-4  px-4 rounded"
+              >
+                Location On Map
+              </button>
             </div>
-            <div className="flex items-center">
-              <FaGlobe className="text-cariGreen  mr-9  " size={40} />
-              <p>
-                <span className="font-semibold">
-                  {schoolContactData.schoolWebsite}
-                </span>
-              </p>
-            </div>
-            <div className="flex items-center">
-              <FaMapMarkerAlt className="text-cariGreen  mr-9" size={40} />
-              <p>
-                <span className="font-semibold">
-                  {schoolContactData.schoolAddress}
-                </span>
-              </p>
-            </div>
-            <button
-              onClick={() => setShowMap(true)}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Show Map
-            </button>
           </div>
         </div>
+        {showMap && (
+          <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="bg-gray-600  p-6 rounded-md shadow-md text-center">
+              <button
+                onClick={() => setShowMap(false)}
+                className=" m-1  mx-auto bg-gray-400  hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              >
+                X
+              </button>
+              <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={{
+                  lat: parseFloat(schoolContactData.latitude),
+                  lng: parseFloat(schoolContactData.longitude),
+                }}
+                zoom={15}
+              >
+                <Marker
+                  position={{
+                    lat: parseFloat(schoolContactData.latitude),
+                    lng: parseFloat(schoolContactData.longitude),
+                  }}
+                />
+              </GoogleMap>
+            </div>
+          </div>
+        )}
       </div>
-      {showMap && (
-        <div
-          id="map-container"
-          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
-        >
-          <div className="bg-white p-6 rounded-md shadow-md">
-            <div id="map" style={{ width: "400px", height: "400px" }}></div>
-            <button
-              onClick={() => setShowMap(false)}
-              className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Close Map
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -13,7 +13,7 @@ function Section1() {
           Platform Bridging Learning - Ultimate, Complete.
         </p>
       </div>
-      <div className="md:w-1/3 relative  ">
+      <div className="md:w-1/3 relative school-details-card ">
         <div className="rounded-full  bg-yellow  ">
           <p className="absolute hidden lg:block top-[20%] right-[10%] text-white text-5xl font-mono font-bold">
             IMAGINE <br />

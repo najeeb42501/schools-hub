@@ -45,98 +45,96 @@ function Signup() {
       alert("An error occurred. Please try again."); // Show error message
     }
   };
-
   return (
-    <div className="h-full w-full border-black border">
-      <div className=" flex   h-[660px]">
-        <LoginPageSideComponent />
-        <div className="flex flex-col justify-center font-bold text-yellow items-center border w-full md:w-3/5 pt-10 grow">
-          <h1 className="text-2xl text-center md:text-3xl font-bold ">
-            Register Yourself On Our Platform!
-          </h1>
-
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
-            <Form className="w-[300px] flex flex-col justify-center py-10">
+    <div
+      className="h-screen w-full flex items-center justify-center bg-no-repeat bg-cover bg-center md:bg-fixed"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1588075592446-265fd1e6e76f?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+      }}
+    >
+      <div className="bg-cariGreen bg-opacity-70 p-8 md:max-w-md w-full rounded-lg">
+        <h1 className="text-white text-3xl font-bold text-center mb-3">
+          Register Yourself On Our Platform!
+        </h1>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form className="space-y-3">
               <Field
-                className=" p-3 my-2 bg-gray-100 rounded "
+                className="w-full p-4 bg-nightGreen rounded text-white outline-none focus:ring-2 focus:ring-yellow-500"
                 type="text"
+                name="username"
                 placeholder="Full Name"
-                name="username"
               />
               <ErrorMessage
                 name="username"
                 component="div"
-                className="text-red-500"
+                className="text-red-600 font-bold text-lg"
               />
               <Field
-                className=" p-3 my-2 bg-gray-100 rounded "
+                className="w-full p-4 bg-nightGreen rounded text-white outline-none focus:ring-2 focus:ring-yellow-500"
                 type="text"
+                name="city"
                 placeholder="City"
-                name="city"
               />
               <ErrorMessage
                 name="city"
                 component="div"
-                className="text-red-500"
+                className="text-red-600 font-bold text-lg"
               />
               <Field
-                className=" p-3 my-2 bg-gray-100 rounded "
+                className="w-full p-4 bg-nightGreen rounded text-white outline-none focus:ring-2 focus:ring-yellow-500"
                 type="email"
-                placeholder="Email"
                 name="email"
+                placeholder="Email Address"
               />
               <ErrorMessage
                 name="email"
                 component="div"
-                className="text-red-500"
+                className="text-red-600 font-bold text-lg"
               />
               <Field
-                className=" p-3 my-2 bg-gray-100 rounded "
+                className="w-full p-4 bg-nightGreen rounded text-white outline-none focus:ring-2 focus:ring-yellow-500"
                 type="password"
+                name="password"
                 placeholder="New Password"
-                name="password"
               />
               <ErrorMessage
                 name="password"
                 component="div"
-                className="text-red-500"
+                className="text-red-600 font-bold text-lg"
               />
               <Field
-                className=" p-3 my-2 bg-gray-100 rounded "
+                className="w-full p-4 bg-nightGreen rounded text-white outline-none focus:ring-2 focus:ring-yellow-500"
                 type="password"
-                placeholder="Confirm Password"
                 name="confirmPassword"
+                placeholder="Confirm Password"
               />
               <ErrorMessage
                 name="confirmPassword"
                 component="div"
-                className="text-red-500"
+                className="text-red-600 font-bold text-lg"
               />
               <button
                 type="submit"
-                className="btn glass text-xl font-bold text-gray-800 bg-yellow hover:bg-gray-800 hover:text-white"
+                className="w-full p-4 bg-white hover:bg-nightGreen hover:text-white rounded text-nightGreen font-bold transition duration-200"
+                disabled={isSubmitting}
               >
-                Sign Up
+                {isSubmitting ? "Processing..." : "Sign Up"}
               </button>
-              <div className="flex justify-between text-small text-gray-500">
-                <p>
-                  <input className="mr-2" type="checkbox" /> Remember me
-                </p>
-                <p>Need Help?</p>
-              </div>
-              <p className="py-8 ">
-                <span className="text-gray-500">Already have an account?</span>
-                <Link to="/login" className="text-yellow">
+              <p className="pt-2 text-center text-white text-lg">
+                Already have an account?{" "}
+                <Link to="/login" className="font-bold hover:underline">
                   Sign In
                 </Link>
               </p>
             </Form>
-          </Formik>
-        </div>
+          )}
+        </Formik>
       </div>
     </div>
   );

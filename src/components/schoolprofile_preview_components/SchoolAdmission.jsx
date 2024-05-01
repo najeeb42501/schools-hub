@@ -42,28 +42,34 @@ function SchoolAdmission({ schoolID }) {
         Admission Details
       </h2>
       <div className="flex flex-col gap-10 justify-center items-center mx-auto">
-        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white school-details-card rounded-lg shadow-xl overflow-hidden">
           <div className="bg-nightGreen p-4">
             <h2 className="text-3xl font-extrabold text-center text-white mb-4">
               Admission Dates
             </h2>
           </div>
-          <div className="flex flex-row p-4 text-lg gap-6 justify-around bg-gray-50">
-            <p className="">
-              Opening Date :<span className=" pl-4 text-xl">{openingDate}</span>
+          <div className="flex flex-row p-10 text-lg gap-6 justify-around bg-gray-50">
+            <p className="school-detail-title">
+              Opening Date :
+              <span className=" pl-4 text-xl school-detail-content">
+                {openingDate}
+              </span>
             </p>
-            <p className="">
-              Closing Date :<span className="pl-4 text-xl">{closingDate}</span>
+            <p className="school-detail-title">
+              Closing Date :
+              <span className="pl-4 text-xl school-detail-content">
+                {closingDate}
+              </span>
             </p>
           </div>
         </div>
-        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white school-details-card rounded-lg shadow-xl overflow-hidden">
           <div className="bg-nightGreen p-4">
             <h2 className="text-3xl font-extrabold text-center text-white mb-4">
               Admission Process
             </h2>
           </div>
-          <div className="flex flex-row text-lg p-4 gap-6  bg-gray-50 ">
+          <div className="flex flex-row  p-4 gap-6  bg-gray-50 ">
             <ReactQuill
               value={schoolAdmissionData.process || ""}
               readOnly={true}
@@ -71,7 +77,7 @@ function SchoolAdmission({ schoolID }) {
             />
           </div>
         </div>
-        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white school-details-card rounded-lg shadow-xl overflow-hidden">
           <div className="bg-nightGreen p-4">
             <h2 className="text-3xl font-extrabold text-center text-white mb-4">
               Admission Criteria
@@ -85,7 +91,7 @@ function SchoolAdmission({ schoolID }) {
             />
           </div>
         </div>
-        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white school-details-card rounded-lg shadow-xl overflow-hidden">
           <div className="bg-nightGreen p-4">
             <h2 className="text-3xl font-extrabold text-center text-white mb-4">
               Required Documents

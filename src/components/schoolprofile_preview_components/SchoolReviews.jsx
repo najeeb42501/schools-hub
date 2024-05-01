@@ -4,12 +4,16 @@ import {
   Avatar,
   Box,
   Button,
+  Card,
+  CardContent,
   Container,
   Grid,
   TextField,
   Typography,
+  Rating,
+  CardHeader,
 } from "@mui/material";
-import { Rating } from "@mui/material";
+
 import { useAppContext } from "../../state/ContextAPI";
 
 function SchoolReviews() {
@@ -91,74 +95,81 @@ function SchoolReviews() {
   };
 
   return (
-    <Container className="bg-gray-100 py-10 px-4">
+    <Container maxWidth="md" sx={{ mt: 4 }}>
       <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 mb-10">
         School Reviews
       </h1>
       {userType === "user" && (
-        <Box className="mt-4">
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h4">Write a Review</Typography>
+        <Card raised sx={{ mb: 4, p: 2 }}>
+          <CardHeader
+            title="Write a Review"
+            titleTypographyProps={{ variant: "h6" }}
+          />
+          <CardContent>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Rating
+                  name="rating"
+                  value={rating}
+                  precision={0.5}
+                  onChange={handleRatingChange}
+                />
+                <TextField
+                  label="Your Review"
+                  multiline
+                  rows={4}
+                  fullWidth
+                  margin="normal"
+                  value={review}
+                  onChange={handleReviewChange}
+                  variant="outlined"
+                  sx={{ mt: 2 }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                  sx={{
+                    backgroundColor: "#2F6D75",
+                    "&:hover": { backgroundColor: "#07393C" },
+                  }}
+                >
+                  Submit Review
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant="body1">Your Rating:</Typography>
-              <Rating
-                name="rating"
-                value={rating}
-                precision={0.5}
-                onChange={handleRatingChange}
-              />
-              {ratingError && (
-                <Typography variant="body2" color="error">
-                  Rating is required
-                </Typography>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Your Review"
-                variant="outlined"
-                multiline
-                rows={4}
-                fullWidth
-                value={review}
-                onChange={handleReviewChange}
-                error={reviewError}
-                helperText={reviewError && "Review is required"}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSubmit}
-              >
-                Submit Review
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
+          </CardContent>
+        </Card>
       )}
 
-      <Box className="mt-4">
-        <Typography variant="h4">Previous Reviews</Typography>
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h3" gutterBottom>
+          Previous Reviews
+        </Typography>
         {reviewsData.map((review, index) => (
-          <Box key={index} className="mt-2 p-4 border border-gray-300 rounded">
-            <Grid container spacing={2}>
-              <Grid item xs={2}>
-                <Avatar />
+          <Card key={index} sx={{ mb: 2 }}>
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item>
+                  <Avatar>{review.reviewerName[0]}</Avatar>
+                </Grid>
+                <Grid item xs>
+                  <Typography variant="subtitle1">
+                    {review.reviewerName}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {review.date}
+                  </Typography>
+                  <Rating value={review.rating} readOnly />
+                  <Typography variant="body1" sx={{ mt: 1 }}>
+                    {review.comment}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={10}>
-                <Typography variant="subtitle1">
-                  {review.reviewerName}
-                </Typography>
-                <Typography variant="body2">{review.date}</Typography>
-                <Rating value={review.rating} readOnly />
-                <Typography variant="body1">{review.comment}</Typography>
-              </Grid>
-            </Grid>
-          </Box>
+            </CardContent>
+          </Card>
         ))}
       </Box>
     </Container>

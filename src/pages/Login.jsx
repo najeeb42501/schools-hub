@@ -1,16 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import LoginPageSideComponent from "../components/LoginPageSideComponent";
+import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../state/ContextAPI";
 
 function Login() {
-  const { state, dispatch } = useAppContext();
-  console.log("Login Page State", state);
-
+  const { dispatch } = useAppContext();
   const navigate = useNavigate();
+
   const initialValues = {
     email: "",
     password: "",
@@ -32,86 +30,87 @@ function Login() {
         },
         body: JSON.stringify(values),
       });
-      if (!response.ok) {
+      if (!response.ok)
         throw new Error(`HTTP error! Status: ${response.status}`);
-      }
       const data = await response.json();
-      console.log("Response After Login : ", data);
       dispatch({ type: "SET_USER", payload: data.user });
-      alert(data.message); // Show success message
-      // Redirect to dashboard or another page
-      if (data.user.type === "user") {
-        navigate("/schools");
-      } else if (data.user.type == "school") {
-        navigate("/editschoolprofile");
-      } else if (data.user.type == "admin") {
-        navigate("/admin");
-      } else {
-        console.log("Error login page");
-      }
+      navigate(
+        data.user.type === "user"
+          ? "/schools"
+          : data.user.type === "school"
+          ? "/editschoolprofile"
+          : "/admin"
+      );
     } catch (error) {
-      console.error(error);
-      alert("An error occurred. Please try again."); // Show error message
+      alert("An error occurred. Please try again.");
     }
   };
 
   return (
-    <div className="h-full w-full border-black border">
-      <div className=" flex  h-[660px] ">
-        <LoginPageSideComponent />
-        <div className="flex flex-col  text-yellow font-bold justify-center items-center border w-full md:w-3/5  pt-10">
-          <h1 className="text-3xl  font-extrabold ">Sign In</h1>
-
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting }) => (
-              <Form className="w-[300px] flex flex-col justify-center py-10">
-                <Field
-                  className=" p-3 my-2 bg-gray-100 rounded "
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="text-red-500"
-                />
-                <Field
-                  className=" p-3 my-2 bg-gray-100 rounded "
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="text-red-500"
-                />
-                <button
-                  type="submit"
-                  className="btn glass text-xl font-bold text-gray-800 bg-yellow hover:bg-gray-800 hover:text-white"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Signing In..." : "Sign In"}
-                </button>
-                <div className="flex justify-between text-small text-gray-500">
-                  <p>
-                    <input className="mr-2" type="checkbox" /> Remember me
-                  </p>
-                  <p>Need Help?</p>
-                </div>
-                <p className="py-8 ">
-                  <span className="text-gray-500">New to platform?</span>
-                  <Link to="/signup"> Sign Up</Link>
-                </p>
-              </Form>
-            )}
-          </Formik>
-        </div>
+    <div
+      className="h-screen w-full flex items-center justify-center bg-no-repeat bg-cover bg-center md:bg-fixed"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1588075592405-d3d4f0846961?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+      }}
+    >
+      <div className="bg-cariGreen bg-opacity-70 p-8 md:max-w-md w-full rounded-lg">
+        <h1 className="text-white text-3xl font-bold text-center mb-6">
+          Sign In
+        </h1>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form className="space-y-6">
+              <Field
+                className="w-full p-4 bg-nightGreen rounded text-white outline-none focus:ring-2 focus:ring-yellow-500"
+                type="email"
+                name="email"
+                placeholder="Email Address"
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-600 font-bold text-lg"
+              />
+              <Field
+                className="w-full p-4 bg-nightGreen rounded text-white outline-none focus:ring-2 focus:ring-yellow-500"
+                type="password"
+                name="password"
+                placeholder="Password"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-600 font-bold text-lg"
+              />
+              <button
+                type="submit"
+                className="w-full p-4 bg-gray-100 hover:bg-nightGreen hover:text-white rounded text-nightGreen font-bold text-lg transition duration-200"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Signing In..." : "Sign In"}
+              </button>
+              <div className="flex justify-between items-center text-sm text-white">
+                <label className="flex items-center font-bold ">
+                  <input type="checkbox" className="mr-2 " /> Remember me
+                </label>
+                <Link to="/help" className="hover:underline font-bold">
+                  Need Help?
+                </Link>
+              </div>
+              <p className="pt-8 text-center text-white text-lg">
+                New to platform?{" "}
+                <Link to="/signup" className="font-bold hover:underline">
+                  Sign Up
+                </Link>
+              </p>
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ function Blog({ blog }) {
   };
 
   return (
-    <div onClick={handleClick} className="cursor-pointer">
+    <div onClick={handleClick} className="cursor-pointer school-details-card">
       <div className="bg-white shadow-2xl w-96">
         <div className="mx-auto max-w-7xl ">
           <div

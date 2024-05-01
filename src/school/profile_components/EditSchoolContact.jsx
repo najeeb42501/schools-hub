@@ -4,8 +4,6 @@ import * as Yup from "yup";
 import { FaPhone, FaEnvelope, FaGlobe, FaMapMarkerAlt } from "react-icons/fa";
 import AddressAutocomplete from "./google_maps_api_component/AddressAutoComplete"; // Adjust the path as necessary
 
-const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-
 function EditSchoolContact({ id }) {
   const [initialData, setInitialData] = useState({
     schoolID: id,
@@ -13,6 +11,8 @@ function EditSchoolContact({ id }) {
     schoolEmail: "",
     schoolWebsite: "",
     schoolAddress: "",
+    latitude: null,
+    longitude: null,
   });
 
   useEffect(() => {
@@ -25,13 +25,11 @@ function EditSchoolContact({ id }) {
           throw new Error("Failed to fetch contact data");
         }
         const data = await response.json();
-        console.log("Response Data : " + JSON.stringify(data));
         setInitialData(data);
       } catch (error) {
         console.error("Error fetching contact data:", error);
       }
     };
-
     fetchSchoolContact();
   }, [id]);
 
@@ -131,10 +129,15 @@ function EditSchoolContact({ id }) {
             <div className="mb-4 flex items-center">
               <FaMapMarkerAlt className="text-gray-400 mr-2" />
               <AddressAutocomplete
+                schoolAddress={formik.values.schoolAddress}
                 onChange={(value) =>
                   formik.setFieldValue("schoolAddress", value)
                 }
-                schoolAddress={formik.values.schoolAddress}
+                onCoordinatesChange={(coords) => {
+                  console.log("Coordinates:", coords);
+                  formik.setFieldValue("latitude", coords.lat);
+                  formik.setFieldValue("longitude", coords.lng);
+                }}
               />
               <ErrorMessage
                 name="schoolAddress"

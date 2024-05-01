@@ -16,7 +16,7 @@ function Services() {
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 px-20 my-20">
-        <div className="flex flex-col items-center gap-2 justify-center shadow-inner bg-cariGreen p-8">
+        <div className="flex flex-col items-center gap-2 school-details-card justify-center shadow-inner bg-cariGreen p-8">
           <FontAwesomeIcon
             icon={faChalkboard}
             className="sm:text-8xl text-nightGreen text-5xl"
@@ -29,7 +29,7 @@ function Services() {
             curriculum, fee structure, and extracurricular activities
           </p>
         </div>
-        <div className="flex flex-col items-center gap-2 justify-center shadow-inner bg-cariGreen p-8">
+        <div className="flex flex-col items-center gap-2 school-details-card justify-center shadow-inner bg-cariGreen p-8">
           <FontAwesomeIcon
             icon={faRobot}
             className="text-nightGreen sm:text-8xl text-5xl"
@@ -44,7 +44,7 @@ function Services() {
             queries.
           </p>
         </div>
-        <div className="flex flex-col items-center gap-2 justify-center shadow-inner bg-cariGreen p-8">
+        <div className="flex flex-col items-center gap-2 school-details-card justify-center shadow-inner bg-cariGreen p-8">
           <FontAwesomeIcon
             icon={faStarHalfStroke}
             className="sm:text-8xl text-nightGreen text-5xl"
@@ -58,7 +58,7 @@ function Services() {
             students. Also, share yours.
           </p>
         </div>
-        <div className="flex flex-col items-center gap-2 justify-center shadow-inner bg-cariGreen p-8">
+        <div className="flex flex-col items-center gap-2 school-details-card justify-center shadow-inner bg-cariGreen p-8">
           <FontAwesomeIcon
             icon={faShieldHalved}
             className="sm:text-8xl text-nightGreen text-5xl"

@@ -157,7 +157,7 @@ function SchoolProfile() {
         </div>
         <div className="md:hidden fixed top-0 left-0 z-50">
           <button
-            className="p-4 bg-cariGreen text-white"
+            className="p-4 bg-nightGreen text-white"
             onClick={toggleSidebar}
           >
             Menu

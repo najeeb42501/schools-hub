@@ -31,9 +31,9 @@ function SchoolCurriculum({ data, schoolID }) {
       <h1 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 p-10">
         School Currilum Details
       </h1>
-      <div className="flex flex-col gap-10 justify-center items-center mx-auto">
+      <div className="flex flex-col gap-10 justify-center  items-center mx-auto">
         {/* First Card */}
-        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg shadow-xl overflow-hidden">
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-white rounded-lg school-details-card shadow-xl overflow-hidden">
           <div className="bg-nightGreen  p-4">
             <h2 className="text-3xl font-extrabold text-white mb-4">
               Curriculum Followed:
@@ -48,7 +48,7 @@ function SchoolCurriculum({ data, schoolID }) {
         </div>
 
         {/* Second Card */}
-        <div className="w-full md:w-3/4 xl:w-2/3 bg-nightGreen rounded-lg shadow-xl overflow-hidden">
+        <div className="w-full md:w-3/4 xl:w-2/3 bg-nightGreen rounded-lg school-details-card shadow-xl overflow-hidden">
           <div className="bg-nightGreen  p-4">
             <h2 className="text-3xl font-bold text-white mb-4">
               Other Details:

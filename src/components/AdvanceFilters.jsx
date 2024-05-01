@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function AdvanceFilters({ onFilterChange }) {
+function AdvanceFilters({ onFilterChange, onResetFilter }) {
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedSchoolLevel, setSelectedSchoolLevel] = useState("");
   const [selectedSchoolType, setSelectedSchoolType] = useState("");
@@ -144,12 +144,18 @@ function AdvanceFilters({ onFilterChange }) {
         </select>
       </div>
       {/* Apply Filter Button */}
-      <div className="w-full flex justify-center">
+      <div className="w-full flex justify-center gap-4">
         <button
           onClick={handleApplyFilters}
           className="bg-cariGreen text-white px-4 py-2 rounded mt-4 hover:bg-nightGreen"
         >
           Apply Filter
+        </button>
+        <button
+          onClick={onResetFilter}
+          className="bg-cariGreen text-white px-4 py-2 rounded mt-4 hover:bg-nightGreen"
+        >
+          Reset Filters
         </button>
       </div>
     </div>

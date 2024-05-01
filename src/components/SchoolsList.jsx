@@ -1,70 +1,67 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 const base_url = "http://localhost:5000/images/";
+
 function SchoolsList({ schools = [] }) {
   if (!Array.isArray(schools) || schools.length === 0) {
-    return <div>No schools available</div>;
+    return (
+      <div className="text-center font-bold text-xl m-10">
+        No schools available for this filter, please reset filters and apply
+        others
+      </div>
+    );
   }
-  console.log("Schools List :", schools);
+
   return (
-    <div>
-      <div className="grid grid-cols-4 items-center gap-6 sm:flex-row flex-wrap m-10">
+    <div className="p-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {schools.map((school) => (
-          <div key={school._id} className="card h-96 bg-base-200 shadow-xl">
-            <figure>
-              <img
-                src={
-                  school.schoolProfilePhoto
-                    ? `${base_url}${school.schoolProfilePhoto}`
-                    : ""
-                }
-                alt="School Logo"
-                className="w-full h-full"
-              />
-            </figure>
-            <div className="card-body py-2">
-              <h2 className="card-title font-sans font-bold text-2xl">
+          <div
+            key={school._id}
+            className="bg-white rounded-lg shadow-lg overflow-hidden school-details-card cursor-pointer"
+          >
+            <img
+              src={
+                school.schoolProfilePhoto
+                  ? `${base_url}${school.schoolProfilePhoto}`
+                  : "https://via.placeholder.com/400x200"
+              }
+              alt="School Logo"
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              <h2 className="text-lg font-bold text-gray-800">
                 {school.schoolName}
               </h2>
-              <p className="font-semibold">
+              <p className="text-gray-600">
                 {school.schoolLevel || "Secondary School"}
               </p>
-              <p className="font-semibold">Address: {school.schoolCity}</p>
-              <div className="card-actions justify-center">
+              <p className="text-gray-800 ">
+                City: <span> {school.schoolCity}</span>
+              </p>
+              <div className="mt-4 text-center">
                 <Link
                   to={`/schoolprofile/${school._id}`}
-                  className="relative inline-flex items-center justify-center p-4 px-6 py-3 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out border-2 border-gray-500 rounded-full shadow-md group"
+                  className="inline-block px-6 py-2 border-2 border-nightGreen text-nightGreen font-medium rounded-full hover:text-white hover:bg-nightGreen transition-colors duration-300"
                 >
-                  <span className="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-yellow group-hover:translate-x-0 ease">
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                      ></path>
-                    </svg>
-                  </span>
-                  <span className="absolute flex items-center justify-center w-full h-full text-black transition-all duration-300 transform group-hover:translate-x-full ease">
-                    See Profile
-                  </span>
-                  <span className="relative invisible">See Profile</span>
+                  See Profile
                 </Link>
               </div>
             </div>
           </div>
         ))}
       </div>
-      <div className="join flex justify-center m-10">
-        <button className="join-item btn hover:bg-yellow">«</button>
-        <button className="join-item btn bg-yellow">Page 1</button>
-        <button className="join-item btn hover:bg-yellow">»</button>
+      <div className="flex justify-center space-x-4 mt-6">
+        <button className="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 transition-colors">
+          «
+        </button>
+        <button className="px-4 py-2 rounded-lg bg-gray-600 text-white">
+          Page 1
+        </button>
+        <button className="px-4 py-2 rounded-lg bg-gray-300 hover:bg-gray-400 transition-colors">
+          »
+        </button>
       </div>
     </div>
   );

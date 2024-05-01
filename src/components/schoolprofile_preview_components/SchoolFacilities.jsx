@@ -34,7 +34,7 @@ function SchoolFacilities({ facilities, activities, schoolID }) {
         {schoolFacilitiesData.activities &&
           schoolFacilitiesData.activities.map((item) => {
             return (
-              <div className="w-full   bg-base-100 shadow-xl p-4 my-5">
+              <div className="w-full   bg-base-100 school-details-card shadow-xl p-4 my-5">
                 <h1 className="card-title text-xl font-bold pb-4">
                   ⦿ {item.name}
                 </h1>

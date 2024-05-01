@@ -3,7 +3,7 @@ import { useLoadScript, Autocomplete } from "@react-google-maps/api";
 
 const libraries = ["places"];
 
-function AddressAutocomplete({ schoolAddress, onChange }) {
+function AddressAutocomplete({ schoolAddress, onChange, onCoordinatesChange }) {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -11,7 +11,6 @@ function AddressAutocomplete({ schoolAddress, onChange }) {
 
   const [address, setAddress] = useState("");
 
-  // Set initial value from props
   useEffect(() => {
     setAddress(schoolAddress);
   }, [schoolAddress]);
@@ -21,7 +20,6 @@ function AddressAutocomplete({ schoolAddress, onChange }) {
   };
 
   const onLoad = (autocomplete) => {
-    // Set initial input field value
     const input = document.getElementById("autocomplete-input");
     input.value = schoolAddress;
     autocomplete.addListener("place_changed", () => {
@@ -29,6 +27,11 @@ function AddressAutocomplete({ schoolAddress, onChange }) {
       if (place.formatted_address) {
         setAddress(place.formatted_address);
         onChange(place.formatted_address);
+        if (place.geometry) {
+          const lat = place.geometry.location.lat();
+          const lng = place.geometry.location.lng();
+          onCoordinatesChange({ lat, lng });
+        }
       }
     });
   };

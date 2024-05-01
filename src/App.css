@@ -15,6 +15,33 @@
     animation: fade-in-up 0.8s ease-out forwards;
 }
 
+.school-details-card {
+    transition: transform 0.3s ease;
+}
 
+.school-details-card:hover {
+    transform: scale(1.03);
+}
 
+.school-detail-item {
+    background: #f8fafc;
+    /* A very light gray that complements the design */
+    padding: 8px 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.school-detail-title {
+    color: #4a5568;
+    /* Dark grayish-blue for better readability */
+    font-size: 1.1rem;
+    /* Slightly larger font size for titles */
+}
+
+.school-detail-content {
+    color: #2d3748;
+    /* Even darker shade for content to emphasize contrast */
+    font-size: 1.25rem;
+    /* Ideal size for readability */
+}
 
