@@ -16,6 +16,10 @@ import { AdminElement, SchoolElement, UserElement } from "./routes/Routes";
 import { useAppContext } from "./state/ContextAPI";
 import BlogPost from "./pages/BlogPost";
 
+import mapboxgl from "mapbox-gl";
+mapboxgl.accessToken =
+  "pk.eyJ1IjoibmFqZWViNDI1MDEiLCJhIjoiY2x2bTdoaXR0MGQ5aTJpbnlqZmpwbjZqdyJ9.HXwQcQdfspyRd-FwDGUgPw";
+
 function App() {
   const { state } = useAppContext();
   console.log("App:", state);

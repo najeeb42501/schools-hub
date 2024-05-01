@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import axios from "axios";
 
-const schoolLevels = ["Primary", "Secondary", "High School"];
+const schoolLevels = ["Primary", "Secondary", "Nursery/KG"];
 const schoolSystems = ["Matriculation", "O-Level"];
 const schoolTypes = ["Co-education", "Boys", "Girls"];
-const schoolMediums = ["English", "Urdu", "Sindi"];
+const schoolMediums = ["English", "Urdu", "Sindhi"];
 const accreditationsOptions = ["Accredited", "Not Accredited"];
 
 const validationSchema = Yup.object({

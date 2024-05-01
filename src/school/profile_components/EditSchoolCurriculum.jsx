@@ -6,7 +6,7 @@ function EditSchoolCurriculum({ id }) {
   const [courses, setCourses] = useState([
     { id: 1, name: "Sindh Text Board", selected: false },
     { id: 2, name: "Oxford O Level", selected: false },
-    { id: 3, name: "Agha Khan", selected: false },
+    { id: 3, name: "Agha Khan Board", selected: false },
     { id: 4, name: "Federal Board", selected: false },
     // Add more courses as needed
   ]);

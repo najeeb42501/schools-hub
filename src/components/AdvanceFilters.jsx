@@ -10,11 +10,16 @@ function AdvanceFilters({ onFilterChange }) {
   const [selectedFeeRange, setSelectedFeeRange] = useState("");
 
   const cities = ["Karachi", "Hyderabad", "Sukkur", "Khairpur"];
-  const schoolLevels = ["Primary", "Secondary", "Nursery"];
-  const schoolTypes = ["Only Boys", "Only Girls", "CO (Boys & Girls)"];
+  const schoolLevels = ["Primary", "Secondary", "Nursery/KG"];
+  const schoolTypes = ["Co-education", "Boys", "Girls"];
   const schoolSizes = ["100 - 200", "200 - 300", "300+"];
-  const schoolMediums = ["English", "Urdu", "Arabic"];
-  const curriculums = ["Sindh Board", "Federal Board", "Oxford"];
+  const schoolMediums = ["English", "Urdu", "Sindhi"];
+  const curriculums = [
+    "Sindh Text Board",
+    "Federal Board",
+    "Oxford O Level",
+    "Agha Khan Board",
+  ];
   const feeRanges = ["1000 - 2000", "2000 - 3000", "3000 - 4000", "5000+"];
 
   // Function to be called when "Apply Filter" button is clicked
@@ -142,7 +147,7 @@ function AdvanceFilters({ onFilterChange }) {
       <div className="w-full flex justify-center">
         <button
           onClick={handleApplyFilters}
-          className="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-600"
+          className="bg-cariGreen text-white px-4 py-2 rounded mt-4 hover:bg-nightGreen"
         >
           Apply Filter
         </button>

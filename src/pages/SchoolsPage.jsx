@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SearchComponent from "../components/SearchComponent";
 import SchoolsList from "../components/SchoolsList";
 import AdvanceFilters from "../components/AdvanceFilters";
+import CurrentLocationFilter from "../components/CurrentLocationFilter";
 import { useAppContext } from "../state/ContextAPI";
 
 function SchoolsPage() {
@@ -85,7 +86,10 @@ function SchoolsPage() {
     <>
       <SearchComponent onSearch={handleSearch} />
       {state.type !== "guest" ? (
-        <AdvanceFilters onFilterChange={handleFilterChange} />
+        <>
+          {/* <CurrentLocationFilter /> */}
+          <AdvanceFilters onFilterChange={handleFilterChange} />
+        </>
       ) : null}
       <SchoolsList schools={filteredSchools} />
     </>

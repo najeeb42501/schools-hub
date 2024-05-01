@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function EditSchoolGallery() {
+function EditSchoolGallery({ id }) {
   const [images, setImages] = useState([]);
 
   const handleImageChange = (e) => {
@@ -19,7 +19,7 @@ function EditSchoolGallery() {
       })
     ).then(
       (images) => {
-        setImages((prevImages) => [...prevImages, ...images]);
+        setImages(images);
       },
       (error) => {
         console.error(error);
@@ -27,10 +27,31 @@ function EditSchoolGallery() {
     );
   };
 
-  const handleSave = () => {
-    // Here you would typically make an API call to the server to upload the images
-    console.log("Images to save:", images);
-    alert("Images saved! (simulated)");
+  const handleSave = async () => {
+    const formData = new FormData();
+    images.forEach((image, index) => {
+      formData.append("images", image);
+    });
+
+    try {
+      const response = await fetch(
+        `http://localhost:5000/editSchoolProfile/save-school-gallery-images/${id}`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      console.log("Images saved successfully");
+      alert("Images saved successfully");
+    } catch (error) {
+      console.error("Error saving images:", error);
+      alert("Failed to save images");
+    }
   };
 
   return (
@@ -39,7 +60,7 @@ function EditSchoolGallery() {
         School Gallery
       </h2>
       <div className="mb-4">
-        <label>Add Images to the School Gallary by uploading.</label>
+        <label>Add Images to the School Gallery by uploading.</label>
         <input
           type="file"
           accept="image/*"
